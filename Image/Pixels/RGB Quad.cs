@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bardez.Projects.InfinityPlus1.Files.External.Image.Pixels
+namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels
 {
     /// <summary>Describes a 32-bit value of RGBA data</summary>
     public class RgbQuad : RgbTriplet

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Bardez.Projects.InfinityPlus1.Files.External.Image.Pixels
+namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels
 {
     /// <summary>Resizes a source image using various techniques</summary>
     public static class Resize

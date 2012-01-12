@@ -1,8 +1,8 @@
 ﻿using System;
 
-using Bardez.Projects.InfinityPlus1.Files.External.Image.Pixels;
+using Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels;
 
-namespace Bardez.Projects.InfinityPlus1.Files.External.Image
+namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image
 {
     /// <summary>Represents a single image instance, be it a bitmap, PNG, JPEG/JFIF or frame of animation from an audio/video movie or animated picture</summary>
     public class Frame
