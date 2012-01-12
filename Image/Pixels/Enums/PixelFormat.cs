@@ -9,5 +9,6 @@ namespace Bardez.Projects.InfinityPlus1.Files.External.Image.Pixels.Enums
         RGB_R8G8B8,
         RGB_B8G8R8,
         RGB_B5G5R5X1,
+        YCbCrJpeg,
     }
 }

@@ -319,8 +319,10 @@ namespace Bardez.Projects.InfinityPlus1.Files.External.Image.Pixels
             Byte[] converted = null;
 
             //convert data
-            if (this.Format == PixelFormat.RGB_B8G8R8 && format == PixelFormat.RGBA_B8G8R8A8)   //RGB BGR 24 -> RGBA BGRA 32
+            if (this.Format == PixelFormat.RGB_B8G8R8 && format == PixelFormat.RGBA_B8G8R8A8)       //RGB BGR 24 -> RGBA BGRA 32
                 converted = ConvertRgbToRgba(data, horizontalPacking, verticalPacking);
+            else if (this.Format == PixelFormat.YCbCrJpeg && format == PixelFormat.RGBA_B8G8R8A8)   //YCbCr (JFIF)-> RGBA BGRA 32
+                    converted = ConvertJfifYCbCrToRgba(data, horizontalPacking, verticalPacking);
 
             return converted;
         }
@@ -380,6 +382,46 @@ namespace Bardez.Projects.InfinityPlus1.Files.External.Image.Pixels
                     rgba[destDataOffset + destPixelX + 1] = data[srcDataOffset + srcPixelX + 1];    //green
                     rgba[destDataOffset + destPixelX + 2] = data[srcDataOffset + srcPixelX + 2];    //red
                     rgba[destDataOffset + destPixelX + 3] = 255;                                    //alpha
+
+                    //increment
+                    srcPixelX += RgbTriplet.BytesPerPixel;
+                    destPixelX += RgbQuad.BytesPerPixel;
+                }
+            }
+
+            return rgba;
+        }
+
+        protected Byte[] ConvertJfifYCbCrToRgba(Byte[] data, Int32 horizontalPacking, Int32 verticalPacking)
+        {
+            Int32 dataRowWidth = this.PackedRowByteWidth(this.ExpandedBitsPerPixel, horizontalPacking);
+            Int32 dataRowCount = this.PackedRowCount(verticalPacking);
+            Int32 newRowWidth = this.PackedRowByteWidth(RgbQuad.BitsPerPixel, horizontalPacking);
+
+            Byte[] rgba = new Byte[newRowWidth * dataRowCount];
+            //loop rows
+            for (Int32 row = 0; row < dataRowCount; ++row)
+            {
+                Int32 srcDataOffset = (row * dataRowWidth);
+                Int32 destDataOffset = (row * newRowWidth);
+                Int32 srcPixelX = 0, destPixelX = 0;
+
+                while (srcPixelX < (this.Metadata.Width * 3))
+                {
+                    Double Y = data[srcDataOffset + srcPixelX];
+                    Double Cb = data[srcDataOffset + srcPixelX + 1];
+                    Double Cr = data[srcDataOffset + srcPixelX + 2];
+                    Double red      = Y + ((Cr - 128) * 1.402);
+                    Double green    = Y - ((Cb - 128) * 0.34414) - ((Cr - 128) * 0.71414);
+                    Double blue     = Y + ((Cb - 128) * 1.772);
+                    Byte redByte = red <= 0 ? (Byte)0 : red >= 255 ? (Byte)255 : Convert.ToByte(red);
+                    Byte greenByte = green <= 0 ? (Byte)0 : green >= 255 ? (Byte)255 : Convert.ToByte(green);
+                    Byte blueByte = blue <= 0 ? (Byte)0 : blue >= 255 ? (Byte)255 : Convert.ToByte(blue);
+
+                    rgba[destDataOffset + destPixelX] = blueByte;       //blue
+                    rgba[destDataOffset + destPixelX + 1] = greenByte;  //green
+                    rgba[destDataOffset + destPixelX + 2] = redByte;    //red
+                    rgba[destDataOffset + destPixelX + 3] = 255;        //alpha
 
                     //increment
                     srcPixelX += RgbTriplet.BytesPerPixel;
