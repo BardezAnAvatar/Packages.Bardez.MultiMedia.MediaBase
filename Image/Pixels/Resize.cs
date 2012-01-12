@@ -165,7 +165,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels
         /// <remarks>Assumes a top-down approach. If a bottom-up is needed, swap first.</remarks>
         public static List<Double> BilinearResampleFloat(IList<Double> data, Int32 actualHeight, Int32 actualWidth, Int32 dataHeight, Int32 dataWidth, Int32 targetHeight, Int32 targetWidth)
         {
-            List<Double> xTransform = new List<Double>(), yTransform = new List<Double>();
+            List<Double> xTransform = new List<Double>(actualHeight * targetWidth), yTransform = new List<Double>(targetWidth * targetHeight);
             Double xPixelStride = Convert.ToDouble(actualWidth) / Convert.ToDouble(targetWidth);    //how much each target pixel should stride through source
             Double yPixelStride = Convert.ToDouble(actualHeight) / Convert.ToDouble(targetHeight);  //how much each target pixel should stride through source
             Double xPixelWeight = Convert.ToDouble(targetWidth) / Convert.ToDouble(actualWidth);    //how much each source pixel worth
