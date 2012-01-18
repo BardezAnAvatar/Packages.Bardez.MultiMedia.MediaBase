@@ -18,9 +18,10 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels
         /// <param name="targetWidth">Output target width</param>
         /// <returns>A List of Double-precision floating point values for later floating point transforms</returns>
         /// <remarks>Assumes a top-down approach. If a bottom-up is needed, swap first.</remarks>
-        public static List<Int32> BilinearResampleInteger(IList<Int32> data, Int32 actualHeight, Int32 actualWidth, Int32 dataHeight, Int32 dataWidth, Int32 targetHeight, Int32 targetWidth)
+        public static Int32[] BilinearResampleInteger(IList<Int32> data, Int32 actualHeight, Int32 actualWidth, Int32 dataHeight, Int32 dataWidth, Int32 targetHeight, Int32 targetWidth)
         {
-            List<Int32> xTransform = new List<Int32>(), yTransform = new List<Int32>();
+            Int32[] xTransform = new Int32[targetWidth * actualHeight];
+            Int32[] yTransform;
             Double xPixelStride = Convert.ToDouble(actualWidth) / Convert.ToDouble(targetWidth);    //how much each target pixel should stride through source
             Double yPixelStride = Convert.ToDouble(actualHeight) / Convert.ToDouble(targetHeight);  //how much each target pixel should stride through source
             Double xPixelWeight = Convert.ToDouble(targetWidth) / Convert.ToDouble(actualWidth);    //how much each source pixel worth
@@ -29,6 +30,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels
             Int32 sourcePre, sourcePost;                                //output variables
             Double sourcePixelStartPosition, sourcePixelEndPosition;    //output variables
 
+            Int32 destIndex = 0;
 
             //do not transform if target and actual widths are the same
             if (actualWidth == targetWidth)
@@ -37,7 +39,11 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels
                 {
                     Int32 yBase = (y * dataWidth);
                     for (Int32 x = 0; x < actualWidth; ++x)
-                        xTransform.Add(data[yBase + x]);
+                    {
+                        xTransform[destIndex] = data[yBase + x];
+                        //xTransform.Add(data[yBase + x]);
+                        ++destIndex;
+                    }
                 }
             }
             else
@@ -84,20 +90,29 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels
                             sampleValue /= difference;
                         }
 
-                        xTransform.Add(Convert.ToInt32(sampleValue));
+
+                        xTransform[destIndex] = Convert.ToInt32(sampleValue);
+                        //xTransform.Add(Convert.ToInt32(sampleValue));
+                        ++destIndex;
                     }
                 }
             }
 
+            destIndex = 0;
+            
             //do not transform if target and actual heights are the same
             if (actualHeight == targetHeight)
                 yTransform = xTransform;    //no difference in data.
             else
             {
+                yTransform = new Int32[targetWidth * targetHeight];
+
                 //go through the scaled temporary transform
                 for (Int32 y = 0; y < targetHeight; ++y)
                 {
-                    List<Double> row = new List<Double>();
+                    //List<Double> row = new List<Double>();
+                    Double[] row = new Double[targetWidth];
+                    Int32 rowIndex = 0;
                     Resize.GetBilinearIndecies(y, yPixelWeight, yPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target Y indecies
                     Double pixelRangeStartSubWeight = 1.0 - (sourcePixelStartPosition % 1.0);
                     Double pixelRangeEndSubWeight = sourcePixelEndPosition % 1.0;
@@ -113,13 +128,15 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels
                     Int32 baseY = (sourcePre * targetWidth);
 
                     if (sourcePre == sourcePost)    //short-circuit the resampling. this will be 100% of the only sample being resampled
-                        for (Int32 x = 0; x < targetWidth; ++x)
-                            row.Add(xTransform[baseY + x]);
+                        Array.Copy(xTransform, baseY, row, 0, targetWidth);
                     else    //I should ALWAYS have more than 1 sample returned, now, as the range between sourcePre and sourcePost
                     {
                         //first sample row
                         for (Int32 x = 0; x < targetWidth; ++x)
-                            row.Add(xTransform[baseY + x] * pixelRangeStartSubWeight);
+                        {
+                            row[rowIndex] = xTransform[baseY + x] * pixelRangeStartSubWeight;
+                            ++rowIndex;
+                        }
 
                         //any intermediate sample rows
                         for (Int32 i = (sourcePre + 1); i < (sourcePost - 1); ++i)
@@ -138,13 +155,16 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels
                         //if stride =< 1, there will be only 2 samples, the start and end, skipping the multiple y loop.
                         //if stride >1, then it is possible to get three or more. here, the total exceeds a single sample
                         // either way, dividing the difference (usually stride) out will give the the weighted average.
-                        for (Int32 rowIndex = 0; rowIndex < row.Count; ++rowIndex)
+                        for (rowIndex = 0; rowIndex < row.Length; ++rowIndex)
                             row[rowIndex] /= difference;
                     }
 
                     //add the row to the output
                     foreach (Double sample in row)
-                        yTransform.Add(Convert.ToInt32(sample));
+                    {
+                        yTransform[destIndex] = Convert.ToInt32(sample);
+                        ++destIndex;
+                    }
                 }
             }
 
