@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Resize
 {
     /// <summary>Resizes a source image using various techniques</summary>
-    public static class Resize
+    public static class BilinearFloatSpace
     {
         /// <summary>Performs a weighted bilinear transform on the source data (more mathematically accurate)</summary>
         /// <param name="data">Array of input data to resample</param>
