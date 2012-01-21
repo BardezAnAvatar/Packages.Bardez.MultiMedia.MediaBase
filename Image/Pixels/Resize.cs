@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels
+namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Resize
 {
     /// <summary>Resizes a source image using various techniques</summary>
     public static class Resize
     {
-        /// <summary>Performs a bilinear transform on the source data</summary>
-        /// <param name="data">IList of input data to resample</param>
+        /// <summary>Performs a weighted bilinear transform on the source data (more mathematically accurate)</summary>
+        /// <param name="data">Array of input data to resample</param>
         /// <param name="actualHeight">Height of the actual image data</param>
         /// <param name="actualWidth">Width of the actual image data</param>
         /// <param name="dataHeight">Height of the input data (i.e.: with padding)</param>
         /// <param name="dataWidth">Width of the input data (i.e.: with padding)</param>
         /// <param name="targetHeight">Output target height</param>
         /// <param name="targetWidth">Output target width</param>
-        /// <returns>A List of Double-precision floating point values for later floating point transforms</returns>
+        /// <returns>An Array of integer values for later floating point transforms</returns>
         /// <remarks>Assumes a top-down approach. If a bottom-up is needed, swap first.</remarks>
-        public static Int32[] BilinearResampleInteger(IList<Int32> data, Int32 actualHeight, Int32 actualWidth, Int32 dataHeight, Int32 dataWidth, Int32 targetHeight, Int32 targetWidth)
+        public static Int32[] BilinearResampleInteger(Int32[] data, Int32 actualHeight, Int32 actualWidth, Int32 dataHeight, Int32 dataWidth, Int32 targetHeight, Int32 targetWidth)
         {
             Int32[] xTransform = new Int32[targetWidth * actualHeight];
             Int32[] yTransform;
@@ -38,12 +36,8 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels
                 for (Int32 y = 0; y < actualHeight; ++y)
                 {
                     Int32 yBase = (y * dataWidth);
-                    for (Int32 x = 0; x < actualWidth; ++x)
-                    {
-                        xTransform[destIndex] = data[yBase + x];
-                        //xTransform.Add(data[yBase + x]);
-                        ++destIndex;
-                    }
+                    Array.Copy(data, yBase, xTransform, destIndex, actualWidth);
+                    destIndex += actualWidth;
                 }
             }
             else
@@ -92,7 +86,6 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels
 
 
                         xTransform[destIndex] = Convert.ToInt32(sampleValue);
-                        //xTransform.Add(Convert.ToInt32(sampleValue));
                         ++destIndex;
                     }
                 }
