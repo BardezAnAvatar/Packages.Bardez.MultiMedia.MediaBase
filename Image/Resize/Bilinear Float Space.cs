@@ -49,8 +49,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Resize
                     for (Int32 x = 0; x < targetWidth; ++x)
                     {
                         //if the distance between source pixels > 2, then the middle pixels keep their pixel weight. That is, the outer pixels must total the remainder of 1 - sum(middle pixel wights).
-
-                        Resize.GetBilinearIndecies(x, xPixelWeight, xPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target X indecies
+                        BilinearFloatSpace.GetBilinearIndecies(x, xPixelWeight, xPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target X indecies
                         Double pixelRangeStartSubWeight = 1.0 - (sourcePixelStartPosition % 1.0);
                         Double pixelRangeEndSubWeight = sourcePixelEndPosition % 1.0;
                         Double difference = xPixelStride;
@@ -106,7 +105,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Resize
                     //List<Double> row = new List<Double>();
                     Double[] row = new Double[targetWidth];
                     Int32 rowIndex = 0;
-                    Resize.GetBilinearIndecies(y, yPixelWeight, yPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target Y indecies
+                    BilinearFloatSpace.GetBilinearIndecies(y, yPixelWeight, yPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target Y indecies
                     Double pixelRangeStartSubWeight = 1.0 - (sourcePixelStartPosition % 1.0);
                     Double pixelRangeEndSubWeight = sourcePixelEndPosition % 1.0;
                     Double difference = yPixelStride;
@@ -207,8 +206,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Resize
                     for (Int32 x = 0; x < targetWidth; ++x)
                     {
                         //if the distance between source pixels > 2, then the middle pixels keep their pixel weight. That is, the outer pixels must total the remainder of 1 - sum(middle pixel wights).
-
-                        Resize.GetBilinearIndecies(x, xPixelWeight, xPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target X indecies
+                        BilinearFloatSpace.GetBilinearIndecies(x, xPixelWeight, xPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target X indecies
                         Double pixelRangeStartSubWeight = 1.0 - (sourcePixelStartPosition % 1.0);
                         Double pixelRangeEndSubWeight = sourcePixelEndPosition % 1.0;
                         Double difference = xPixelStride;
@@ -256,7 +254,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Resize
                 for (Int32 y = 0; y < targetHeight; ++y)
                 {
                     List<Double> row = new List<Double>();
-                    Resize.GetBilinearIndecies(y, yPixelWeight, yPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target Y indecies
+                    BilinearFloatSpace.GetBilinearIndecies(y, yPixelWeight, yPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target Y indecies
                     Double pixelRangeStartSubWeight = 1.0 - (sourcePixelStartPosition % 1.0);
                     Double pixelRangeEndSubWeight = sourcePixelEndPosition % 1.0;
                     Double difference = yPixelStride;
