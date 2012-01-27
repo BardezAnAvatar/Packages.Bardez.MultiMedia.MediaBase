@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
 {
-    /// <summary>Interface for images </summary>
+    /// <summary>Interface for images that can return a frame for processing</summary>
     public interface IImage
     {
         /// <summary>Gets a frame image from the pixel data already in place</summary>
