@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
 {
+    /// <summary>Interface for images </summary>
     public interface IImage
     {
         /// <summary>Gets a frame image from the pixel data already in place</summary>

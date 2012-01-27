@@ -39,10 +39,22 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Video\Enums\Scan Line Order.cs" />
+    <Compile Include="Video\Frame.cs" />
     <Compile Include="Video\IAnimation.cs" />
     <Compile Include="Audio\IAudio.cs" />
     <Compile Include="Video\IImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Video\Pixels\Enums\PixelFormat.cs" />
+    <Compile Include="Video\Pixels\Palette.cs" />
+    <Compile Include="Video\Pixels\Pixel Base.cs" />
+    <Compile Include="Video\Pixels\Pixel Data.cs" />
+    <Compile Include="Video\Pixels\RGB Quad.cs" />
+    <Compile Include="Video\Pixels\RGB Triplet.cs" />
+    <Compile Include="Video\Pixels\YUV 444.cs" />
+    <Compile Include="Video\Resize\Bilinear Float Space.cs" />
+    <Compile Include="Video\Resize\Delegates.cs" />
+    <Compile Include="Video\Resize\Nearest Neighbor Integer Space.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
