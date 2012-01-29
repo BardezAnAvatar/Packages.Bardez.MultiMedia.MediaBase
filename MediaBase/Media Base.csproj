@@ -45,6 +45,7 @@
     <Compile Include="Audio\IAudio.cs" />
     <Compile Include="Video\IImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Video\IImageSet.cs" />
     <Compile Include="Video\Pixels\Enums\PixelFormat.cs" />
     <Compile Include="Video\Pixels\Palette.cs" />
     <Compile Include="Video\Pixels\Pixel Base.cs" />
