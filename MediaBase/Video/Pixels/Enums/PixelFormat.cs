@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels.Enums
+namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels.Enums
 {
     /// <summary>Represents a number of pixel formats that the binary data represents</summary>
     public enum PixelFormat

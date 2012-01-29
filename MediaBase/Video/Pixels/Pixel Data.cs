@@ -1,9 +1,9 @@
 ﻿using System;
 
-using Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Enums;
-using Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels.Enums;
+using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Enums;
+using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels.Enums;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels
+namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
 {
     /// <summary>Represents a single-source for an image's pixel data. This class will record the input type, and output pixel data as requested, converting as necessary</summary>
     public class PixelData

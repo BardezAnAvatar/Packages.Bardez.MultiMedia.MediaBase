@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels
+namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
 {
     /// <summary>Represents a base type for pixel data</summary>
     public abstract class PixelBase

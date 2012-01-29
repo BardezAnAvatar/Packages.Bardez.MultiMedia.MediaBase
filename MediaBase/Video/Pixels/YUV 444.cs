@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.External.Image.Pixels
+namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
 {
     /// <summary>Describes a 24-bit value of Y'UV 4:4:4 data</summary>
     /// <remarks>See http://en.wikipedia.org/wiki/YUV for YUV info</remarks>
