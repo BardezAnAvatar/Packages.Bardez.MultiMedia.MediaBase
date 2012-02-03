@@ -9,5 +9,8 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
         /// <param name="index">Index of the frame to get</param>
         /// <returns>A frame containing the pixel data</returns>
         Frame GetFrame(Int32 index);
+
+        /// <summary>Property exposing the count of frames in the Image Set</summary>
+        Int64 FrameCount { get; }
     }
 }

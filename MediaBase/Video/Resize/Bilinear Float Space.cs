@@ -49,7 +49,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Resize
                     for (Int32 x = 0; x < targetWidth; ++x)
                     {
                         //if the distance between source pixels > 2, then the middle pixels keep their pixel weight. That is, the outer pixels must total the remainder of 1 - sum(middle pixel wights).
-                        BilinearFloatSpace.GetBilinearIndecies(x, xPixelWeight, xPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target X indecies
+                        BilinearFloatSpace.GetBilinearIndeces(x, xPixelWeight, xPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target X indecies
                         Double pixelRangeStartSubWeight = 1.0 - (sourcePixelStartPosition % 1.0);
                         Double pixelRangeEndSubWeight = sourcePixelEndPosition % 1.0;
                         Double difference = xPixelStride;
@@ -105,7 +105,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Resize
                     //List<Double> row = new List<Double>();
                     Double[] row = new Double[targetWidth];
                     Int32 rowIndex = 0;
-                    BilinearFloatSpace.GetBilinearIndecies(y, yPixelWeight, yPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target Y indecies
+                    BilinearFloatSpace.GetBilinearIndeces(y, yPixelWeight, yPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target Y indecies
                     Double pixelRangeStartSubWeight = 1.0 - (sourcePixelStartPosition % 1.0);
                     Double pixelRangeEndSubWeight = sourcePixelEndPosition % 1.0;
                     Double difference = yPixelStride;
@@ -206,7 +206,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Resize
                     for (Int32 x = 0; x < targetWidth; ++x)
                     {
                         //if the distance between source pixels > 2, then the middle pixels keep their pixel weight. That is, the outer pixels must total the remainder of 1 - sum(middle pixel wights).
-                        BilinearFloatSpace.GetBilinearIndecies(x, xPixelWeight, xPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target X indecies
+                        BilinearFloatSpace.GetBilinearIndeces(x, xPixelWeight, xPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target X indecies
                         Double pixelRangeStartSubWeight = 1.0 - (sourcePixelStartPosition % 1.0);
                         Double pixelRangeEndSubWeight = sourcePixelEndPosition % 1.0;
                         Double difference = xPixelStride;
@@ -254,7 +254,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Resize
                 for (Int32 y = 0; y < targetHeight; ++y)
                 {
                     List<Double> row = new List<Double>();
-                    BilinearFloatSpace.GetBilinearIndecies(y, yPixelWeight, yPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target Y indecies
+                    BilinearFloatSpace.GetBilinearIndeces(y, yPixelWeight, yPixelStride, out sourcePre, out sourcePost, out sourcePixelStartPosition, out sourcePixelEndPosition);  //get target Y indecies
                     Double pixelRangeStartSubWeight = 1.0 - (sourcePixelStartPosition % 1.0);
                     Double pixelRangeEndSubWeight = sourcePixelEndPosition % 1.0;
                     Double difference = yPixelStride;
@@ -313,7 +313,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Resize
         /// <param name="right">Succeedin pixel of source to sample</param>
         /// <param name="target">Desired index of destination pixel</param>
         /// <param name="sourceStep">The weight per source pixel when mapping to a new resolution</param>
-        private static void GetBilinearIndecies(Int32 target, Double sourcePixelWeight, Double sourceStep, out Int32 left, out Int32 right, out Double startPosition, out Double endPosition)
+        private static void GetBilinearIndeces(Int32 target, Double sourcePixelWeight, Double sourceStep, out Int32 left, out Int32 right, out Double startPosition, out Double endPosition)
         {
             startPosition = sourceStep * target;
             endPosition = startPosition + sourceStep;
