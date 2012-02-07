@@ -9,10 +9,10 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
     {
         #region Properties
         /// <summary>Indicates the horizontal origin of the frame.</summary>
-        public UInt64 OriginX { get; set; }
+        public Int64 OriginX { get; set; }
 
         /// <summary>Indicates the vertical origin of the frame.</summary>
-        public UInt64 OriginY { get; set; }
+        public Int64 OriginY { get; set; }
 
         /// <summary>Exposes the underlying image binary data, possibly interpreted.</summary>
         public PixelData Pixels { get; set; }
