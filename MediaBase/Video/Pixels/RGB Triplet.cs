@@ -51,5 +51,18 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
             return new Byte[] { this.Blue, this.Green, this.Red };
         }
         #endregion
+
+
+        #region Overrides
+        /// <summary>String representation override</summary>
+        /// <returns>A String representation</returns>
+        public override String ToString()
+        {
+            return String.Concat(
+                "{ ",
+                String.Format("Red={0:X2}, Green={1:X2}, Blue={2:X2}", this.Red, this.Green, this.Blue),
+                " }");
+        }
+        #endregion
     }
 }

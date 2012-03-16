@@ -17,5 +17,22 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
         /// <summary>Exposes the underlying image binary data, possibly interpreted.</summary>
         public PixelData Pixels { get; set; }
         #endregion
+
+
+        #region Construction
+        /// <summary>Default constructor</summary>
+        public Frame() { }
+
+        /// <summary>Partial definition constructor</summary>
+        public Frame(PixelData data) : this(data, 0L, 0L) { }
+
+        /// <summary>Definition constructor</summary>
+        public Frame(PixelData data, Int64 originX, Int64 originY)
+        {
+            this.Pixels = data;
+            this.OriginX = originX;
+            this.OriginY = originY;
+        }
+        #endregion
     }
 }

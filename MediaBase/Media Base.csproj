@@ -39,6 +39,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Video\IMovie.cs" />
     <Compile Include="Video\Enums\Scan Line Order.cs" />
     <Compile Include="Video\Frame.cs" />
     <Compile Include="Video\IAnimation.cs" />
@@ -56,6 +57,16 @@
     <Compile Include="Video\Resize\Bilinear Float Space.cs" />
     <Compile Include="Video\Resize\Delegates.cs" />
     <Compile Include="Video\Resize\Nearest Neighbor Integer Space.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Native Code\Win32 Structures\Win32 Structures.vcxproj">
+      <Project>{257201A0-0B65-4EA0-AC04-0B8005AECC37}</Project>
+      <Name>Win32 Structures</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReusableCode\ReusableCode.csproj">
+      <Project>{72729DA3-9933-4C3D-91C6-2CF0336D6493}</Project>
+      <Name>ReusableCode</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
