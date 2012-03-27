@@ -27,7 +27,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
         Byte[] GetAudioBlock(Int32 blockNumber, Int32 streamNumber);
 
         /// <summary>Exposes the event for timer elapse</summary>
-        event Action TimerElapsed;
+        event Action<Frame> PlayFrame;
 
         /// <summary>Control method to clear the TimerElapsed event delegates</summary>
         void ClearTimerElapsed();
