@@ -35,6 +35,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
             public Int32 BitsPerDataPixel { get; set; }
             #endregion
 
+
             #region Construction
             /// <summary>Default constructor</summary>
             public MetaData() { }
@@ -54,11 +55,20 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
                 this.BitsPerDataPixel = bitsPerStreamPixel;
             }
             #endregion
+
+
+            #region Cloning
+            /// <summary>Performs a deep copy of the object and returns another, separate instace of it.</summary>
+            public MetaData Clone()
+            {
+                return new MetaData(this.Height, this.Width, this.HorizontalPacking, this.VerticalPacking, this.BitsPerDataPixel);
+            }
+            #endregion
         }
         #endregion
 
 
-        #region Properties
+        #region Fields
         /// <summary>Indicates the data format of the pixels</summary>
         public PixelFormat Format { get; set; }
 
@@ -75,7 +85,10 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
 
         /// <summary>Exposes the group of metadata</summary>
         public MetaData Metadata { get; set; }
+        #endregion
 
+
+        #region Properties
         /// <summary>Gets the size, in bytes, of a logical row of pixels based off of the bits per pixel</summary>
         protected Int32 RowDataSize
         {
@@ -141,6 +154,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
         public PixelData(Byte[] binary, Int32 height, Int32 width, Int32 rowPacking, Int32 heightPacking, Int32 bitsPerStreamPixel)
             : this(binary, ScanLineOrder.BottomUp, PixelFormat.RGBA_R8G8B8A8, null, height, width, rowPacking, heightPacking, bitsPerStreamPixel) { }
         #endregion
+
 
         #region Methods
         /// <summary>Gets the size, in bytes, of a logical row of pixels based off of the bits per pixel</summary>
@@ -258,27 +272,23 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
         /// <summary>Decodes a row of 8-bit palette data to a decoded binary data Byte array</summary>
         protected virtual void DecodePaletteDataRow8Bit(Byte[] decompressed, Int32 sourceLocation)
         {
-            //Metadata fetch
-            Int32 width = this.Metadata.Width;
-
             //stored references to speed up code
             IList<Byte[]> pixBinData = this.DataPalette.PixelData;
             Byte[] nativeData = this.NativeBinaryData;
             Int32 destPosition = 0;
+            Int32 dataLen = this.DataPalette.BitsPerPixel / 8;  //might be a hack
+            Int32 end = sourceLocation + this.Metadata.Width;
 
-            for (Int32 x = 0; x < width; ++x)
+            for (; sourceLocation < end; ++sourceLocation)
             {
-                Byte value = nativeData[sourceLocation + x];   //get the current byte, assign it to a shiftable variable
+                Byte value = nativeData[sourceLocation];   //get the current byte, assign it to a shiftable variable
 
                 //now we need the pixel.
                 Byte[] data = pixBinData[value];
-                Int32 len = data.Length;
 
                 //Array.Copy is slow here...
-                for (Int32 i = 0; i < len; ++i)
-                    decompressed[destPosition + i] = data[i];
-
-                destPosition += len;
+                for (Int32 i = 0; i < dataLen; ++i)
+                    decompressed[destPosition++] = data[i];
             }
         }
         #endregion
@@ -410,6 +420,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
             return data;
         }
         #endregion
+
 
         #region Conversion methods
         /// <param name="horizontalPacking">Row packing</param>
@@ -544,6 +555,18 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
             }
 
             return rgba;
+        }
+        #endregion
+
+
+        #region Cloning
+        /// <summary>Performs a deep copy of the object and returns another, separate instace of it.</summary>
+        public PixelData Clone()
+        {
+            Byte[] data = new Byte[this.NativeBinaryData.Length];
+            this.NativeBinaryData.CopyTo(data, 0);
+
+            return new PixelData(data, this.Order, this.Format, this.DataPalette, this.Metadata.Height, this.Metadata.Width, this.Metadata.HorizontalPacking, this.Metadata.VerticalPacking, this.Metadata.BitsPerDataPixel);
         }
         #endregion
     }
