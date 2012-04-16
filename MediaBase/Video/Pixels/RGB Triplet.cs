@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
 {
@@ -39,6 +40,17 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
             this.Red = red;
             this.Green = green;
             this.Blue = blue;
+        }
+
+        /// <summary>Definition constructor</summary>
+        /// <param name="red">The red component value</param>
+        /// <param name="green">The green component value</param>
+        /// <param name="blue">The blue component value</param>
+        public RgbTriplet(Color gdiColor)
+        {
+            this.Red = gdiColor.R;
+            this.Green = gdiColor.G;
+            this.Blue = gdiColor.B;
         }
         #endregion
 
