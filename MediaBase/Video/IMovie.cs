@@ -17,7 +17,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
         /// <summary>Stops video playback, if playing</summary>
         void StopVideoPlayback();
 
-        /// <summary>Creates a playback timer for the MVE</summary>
+        /// <summary>Creates a playback timer for the movie</summary>
         void StartVideoPlayback();
 
         /// <summary>Retrieves audio block from the data cache</summary>
