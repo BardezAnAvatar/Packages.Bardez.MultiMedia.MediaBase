@@ -7,7 +7,6 @@ using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels.Enums;
 using Bardez.Projects.MultiMedia.LibAV;
 using Bardez.Projects.ReusableCode;
 using Bardez.Projects.Utility;
-using Bardez.Projects.Utility.DataContainers;
 
 namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
 {
