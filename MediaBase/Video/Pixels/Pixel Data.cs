@@ -431,35 +431,16 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
             LibAVPixelFormat destFormat = formatEnd.ToLibAVPixelFormat();
 
             using (SWScale scale = new SWScale(
-                        LibAVPictureDetail.Build(this.Metadata.Height, this.Metadata.Width, sourceFormat),
-                        LibAVPictureDetail.Build(this.Metadata.Height, this.Metadata.Width, destFormat),
+                        LibAVPictureDetail.Build(this.Metadata.Width, this.Metadata.Height, sourceFormat),
+                        LibAVPictureDetail.Build(this.Metadata.Width, this.Metadata.Height, destFormat),
                         ResizeOptions.Lanczos))
             {
-                using (LibAVPicture source = LibAVPicture.BuildPicture(sourceFormat, this.Metadata.Width, this.Metadata.Height))
-                using (LibAVPicture destination = LibAVPicture.BuildPicture(destFormat, this.Metadata.Width, this.Metadata.Height))
-                {
-                    source.Data = inputData;
-                    scale.Transform(source, destination);
-                    result = destination.Data;
-                }
+                MemoryStream outStream = null;
+                scale.Transform(inputData, out outStream);
+                result = outStream;
             }
 
             return result;
-
-            ////TODO: I would like to link this to libAV/libSwScale instead, but I think that the byte padding for BMP, etc. prevent this.
-
-
-            //Byte[] converted = null;
-
-            ////convert data
-            //if (this.Format == PixelFormat.RGB_B8G8R8 && format == PixelFormat.RGBA_B8G8R8A8)           //RGB BGR 24 -> RGBA BGRA 32
-            //    converted = ConvertRgb24ToRgba(data, horizontalPacking, verticalPacking);
-            //else if (this.Format == PixelFormat.YCbCrJpeg && format == PixelFormat.RGBA_B8G8R8A8)       //YCbCr (JFIF)-> RGBA BGRA 32
-            //    converted = ConvertJfifYCbCrToRgba(data, horizontalPacking, verticalPacking);
-            //else if (this.Format == PixelFormat.RGB_B5G5R5X1 && format == PixelFormat.RGBA_B8G8R8A8)    //RGB BGR 16 -> RGBA BGRA 32
-            //    converted = ConvertRgb16_555_ToRgba(data, horizontalPacking, verticalPacking);
-
-            //return new MemoryStream(converted);
         }
 
         /// <summary>Retrieves the pixel data in the specified format, in the specified scan line order</summary>
@@ -483,7 +464,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
             //strip packing
             if (this.Metadata.HorizontalPacking != 0 || this.Metadata.VerticalPacking != 0)
                 dataStream = this.AdjustForPacking(dataStream, this.Metadata.HorizontalPacking, this.Metadata.VerticalPacking, 0, 0, order);     // it should know the existing packing for this instance, specify the new packing
-            
+
             //convert as necessary
             if (format != this.Format)
                 dataStream = this.ConvertData(dataStream, this.Format, format);
