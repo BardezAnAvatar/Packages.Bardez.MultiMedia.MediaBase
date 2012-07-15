@@ -628,8 +628,8 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
 
         #region Stream closing
         /// <summary>Assigns the Stream reference, closing the existing stream if it is not the existing </summary>
-        /// <param name="oldData"></param>
-        /// <param name="newData"></param>
+        /// <param name="oldData">Old stream's data</param>
+        /// <param name="newData">New stream to assign</param>
         protected void AssignStreamAndConditionallyCloseSource(ref Stream oldData, Stream newData)
         {
             //original reference is neither null nor is it native data
