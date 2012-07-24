@@ -32,6 +32,9 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels.Enums
 
         /// <summary>Represents YUV colorspace, with 4 Y pixels (square) to every one Cb and Cr pixel</summary>
         YUV_YUV_Y4Cb1Cr1,
+
+        /// <summary>Represents RBG32 with a palette</summary>
+        RGB_32_Paletted,
     }
 
     /// <summary>Extension class for converting the PixelFormat enum to other destination pixel format enumerators</summary>
@@ -67,6 +70,9 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels.Enums
                 case PixelFormat.YUV_YUV_Y4Cb1Cr1:
                     format = LibAVPixelFormat.PIX_FMT_YUV420P;
                     break;
+                case PixelFormat.RGB_32_Paletted:
+                    format = LibAVPixelFormat.PIX_FMT_PAL8;
+                    break;
             }
 
             return format;
@@ -101,6 +107,9 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels.Enums
                     break;
                 case LibAVPixelFormat.PIX_FMT_YUV420P:
                     format = PixelFormat.YUV_YUV_Y4Cb1Cr1;
+                    break;
+                case LibAVPixelFormat.PIX_FMT_PAL8:
+                    format = PixelFormat.RGB_32_Paletted;
                     break;
             }
 
