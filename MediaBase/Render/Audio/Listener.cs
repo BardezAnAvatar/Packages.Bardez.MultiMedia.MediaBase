@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Bardez.Projects.BasicStructures.ThreeDimensional;
+
 namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Render.Audio
 {
     /// <summary>

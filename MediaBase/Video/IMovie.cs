@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Bardez.Projects.Win32.Audio;
+using Bardez.Projects.BasicStructures.Win32.Audio;
 
 namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
 {
