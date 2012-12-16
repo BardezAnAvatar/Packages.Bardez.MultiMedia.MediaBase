@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Bardez.Projects.BasicStructures.ThreeDimensional;
+
 namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Render.Audio
 {
     /// <summary>Represents source parameters for audio being rendered. Used for 3D audio.</summary>

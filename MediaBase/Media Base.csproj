@@ -68,6 +68,12 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Render\Audio\Audio Cone.cs" />
+    <Compile Include="Render\Audio\Audio Source Params.cs" />
+    <Compile Include="Render\Audio\Distance Curve Point.cs" />
+    <Compile Include="Render\Audio\Emitter.cs" />
+    <Compile Include="Render\Audio\IAudio Renderer.cs" />
+    <Compile Include="Render\Audio\Listener.cs" />
     <Compile Include="Video\IMovie.cs" />
     <Compile Include="Video\Enums\Scan Line Order.cs" />
     <Compile Include="Video\Frame.cs" />
@@ -89,13 +95,13 @@
     <Compile Include="Video\Resize\Nearest Neighbor Integer Space.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Basic Structures\Basic Structures.csproj">
+      <Project>{257201A0-0B65-4EA0-AC04-0B8005AECC37}</Project>
+      <Name>Basic Structures</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Native Code\ffmpeg\Lib AV\Lib AV.vcxproj">
       <Project>{1F9B2E1A-E000-4076-8D38-D995A6A3922C}</Project>
-      <Name>Lib AV %28Native Projects\Win32 C++ CLI\Lib AV%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Native Code\Win32 Structures\Win32 Structures.vcxproj">
-      <Project>{257201A0-0B65-4EA0-AC04-0B8005AECC37}</Project>
-      <Name>Win32 Structures</Name>
+      <Name>Lib AV</Name>
     </ProjectReference>
     <ProjectReference Include="..\ReusableCode\ReusableCode.csproj">
       <Project>{72729DA3-9933-4C3D-91C6-2CF0336D6493}</Project>
