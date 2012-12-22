@@ -21,6 +21,13 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Render.Audio
     /// </remarks>
     public interface IAudioRenderer : IDisposable
     {
+        #region Properties
+        /// <summary>Exposes a flag indicating whether or not the renderer can accept new data</summary>
+        Boolean CanAcceptSampleData { get; }
+        #endregion
+
+
+        #region Events
         /// <summary>Event that occurs when the renderer has finished rendering the provided data stream(s). Used to signal expiration and ready for disposal.</summary>
         event EventHandler FinishedRendering;
 
@@ -29,25 +36,30 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Render.Audio
         ///     if the behavior specified is to continue rendering
         /// </summary>
         event EventHandler RequestAdditionalData;
+        #endregion
 
+
+        #region Methods
         /// <summary>Initializes this audio renderer to use the settings provided</summary>
         /// <param name="audioInfo">Collection of data that indicates what the format of the source audio is</param>
         void Initialize(WaveFormatEx audioInfo);
-
-        /// <summary>Exposes a flag indicating whether or not the renderer can accept new data</summary>
-        Boolean CanAcceptSampleData { get; }
 
         /// <summary>Submits data for rendering</summary>
         /// <param name="data">Audio samples to render</param>
         void SubmitSampleData(Byte[] data);
 
+        /// <summary>Command to start rendering audio</summary>
+        /// <param name="behavior">Behavior with which to render audio</param>
         void StartRendering(AudioRenderStyle behavior);
 
+        /// <summary>Sets details for the rendering context (such as 3D coordinates and so on)</summary>
+        /// <param name="detail">Rendering context details to set</param>
         void SetRenderDetails(AudioSourceParams detail);
 
         /// <summary>Pauses audio playback. Buffers will pick up where left off if rendering resumed</summary>
         /// <param name="finishEffects">Flag to indicate whether any effects should render (e.g.: echo) [true] or if it should halt completely [false]</param>
         void Pause(Boolean finishEffects);
+        #endregion
     }
 
     /// <summary>Public enumeration of styles of rendering audio</summary>
