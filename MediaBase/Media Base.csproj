@@ -64,7 +64,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
@@ -84,8 +83,11 @@
     <Compile Include="Video\IImageSet.cs" />
     <Compile Include="Video\ITimer.cs" />
     <Compile Include="Video\Pixels\Enums\Pixel Format.cs" />
+    <Compile Include="Video\Pixels\IPixelConverter.cs" />
     <Compile Include="Video\Pixels\Palette.cs" />
     <Compile Include="Video\Pixels\Pixel Base.cs" />
+    <Compile Include="Video\Pixels\Pixel Calculations.cs" />
+    <Compile Include="Video\Pixels\Basic Pixel Converter.cs" />
     <Compile Include="Video\Pixels\Pixel Data.cs" />
     <Compile Include="Video\Pixels\RGB Quad.cs" />
     <Compile Include="Video\Pixels\RGB Triplet.cs" />
@@ -98,10 +100,6 @@
     <ProjectReference Include="..\Basic Structures\Basic Structures.csproj">
       <Project>{257201A0-0B65-4EA0-AC04-0B8005AECC37}</Project>
       <Name>Basic Structures</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Native Code\ffmpeg\Lib AV\Lib AV.vcxproj">
-      <Project>{1F9B2E1A-E000-4076-8D38-D995A6A3922C}</Project>
-      <Name>Lib AV</Name>
     </ProjectReference>
     <ProjectReference Include="..\ReusableCode\ReusableCode.csproj">
       <Project>{72729DA3-9933-4C3D-91C6-2CF0336D6493}</Project>
