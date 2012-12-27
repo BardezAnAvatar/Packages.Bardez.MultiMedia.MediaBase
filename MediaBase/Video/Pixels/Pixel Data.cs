@@ -4,7 +4,6 @@ using System.IO;
 
 using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Enums;
 using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels.Enums;
-using Bardez.Projects.MultiMedia.LibAV;
 using Bardez.Projects.ReusableCode;
 using Bardez.Projects.Utility;
 
@@ -91,7 +90,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
         /// <summary>Gets the packed size, in bytes, of a logical row of pixels based off of the bits per pixel</summary>
         protected Int32 RowDataSize
         {
-            get { return this.PackedRowByteWidth(this.ExpandedBitsPerPixel, this.Metadata.HorizontalPacking); }
+            get { return PixelCalculations.PackedRowByteWidth(this.ExpandedBitsPerPixel, this.Metadata.HorizontalPacking, this.Metadata.Width); }
         }
 
         /// <summary>The byte width of a single row in this Pixel Data</summary>
@@ -114,7 +113,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
         /// <summary>Gets the count of pixel rows in the binary data, packed</summary>
         protected Int32 RowCount
         {
-            get { return this.PackedRowCount(this.Metadata.VerticalPacking); }
+            get { return PixelCalculations.PackedRowCount(this.Metadata.VerticalPacking, this.Metadata.Height); }
         }
 
         /// <summary>Represents the binary array of pixel data read from source.</summary>
@@ -181,30 +180,6 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
 
 
         #region Methods
-        /// <summary>Gets the size, in bytes, of a logical row of pixels based off of the bits per pixel</summary>
-        /// <param name="bitsPerPixel">The bits per pixel of the row (compressed or decompressed)</param>
-        /// <returns>The byte width queried</returns>
-        protected Int32 UnpackedRowByteWidth(Int32 bitsPerPixel)
-        {
-            Int32 rowSize = bitsPerPixel * this.Metadata.Width;     //bits per row for data
-            rowSize = (rowSize / 8) + ((rowSize % 8) > 0 ? 1 : 0);  //bytes per row
-            return rowSize;
-        }
-
-        /// <summary>Gets the size, in bytes, of a logical row of pixels based off of the bits per pixel, packing them to a byte aligment size specfied</summary>
-        /// <param name="bitsPerPixel">The bits per pixel of the row (compressed or decompressed)</param>
-        /// <param name="packing">The packing of bytes to a single row</param>
-        /// <returns>The byte width queried</returns>
-        protected Int32 PackedRowByteWidth(Int32 bitsPerPixel, Int32 packing)
-        {
-            Int32 rowSize = this.UnpackedRowByteWidth(bitsPerPixel);
-
-            if (packing > 0)
-                rowSize += (rowSize % packing);                     //packed bytes per row
-
-            return rowSize;
-        }
-
         /// <summary>Gets the count of pixel rows in the binary data, packed</summary>
         /// <param name="packing">The packing of rows</param>
         /// <returns>The byte width queried</returns>
@@ -248,8 +223,8 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
         protected Byte[] DecodePaletteDataRow(Int32 row)
         {
             //get starting position
-            Byte[] decompressed = new Byte[this.PackedRowByteWidth(this.DataPalette.BitsPerPixel, this.Metadata.HorizontalPacking)];
-            Int32 location = row * this.PackedRowByteWidth(this.Metadata.BitsPerDataPixel, this.Metadata.HorizontalPacking);
+            Byte[] decompressed = new Byte[PixelCalculations.PackedRowByteWidth(this.DataPalette.BitsPerPixel, this.Metadata.HorizontalPacking, this.Metadata.Width)];
+            Int32 location = row * PixelCalculations.PackedRowByteWidth(this.Metadata.BitsPerDataPixel, this.Metadata.HorizontalPacking, this.Metadata.Width);
 
             //decompress data (yay!)
             //read the packed data, 1 value at a time, and write the palette entry to the decompressed stream.
@@ -342,7 +317,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
         /// <remarks>Uses the current pixel data's packing, not the destination's</remarks>
         protected MemoryStream FlipVertical(MemoryStream data)
         {
-            Int32 rowLength = this.PackedRowByteWidth(this.ExpandedBitsPerPixel, this.Metadata.HorizontalPacking);
+            Int32 rowLength = PixelCalculations.PackedRowByteWidth(this.ExpandedBitsPerPixel, this.Metadata.HorizontalPacking, this.Metadata.Width);
             MemoryStream destination = new MemoryStream(Convert.ToInt32(data.Length));
 
             //loop through half of the number of rows in the data
@@ -370,10 +345,10 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
         protected MemoryStream AdjustForPacking(MemoryStream data, Int32 sourcePackingHorizontal, Int32 sourcePackingVertical, Int32 destPackingHorizontal, Int32 destPackingVertical, ScanLineOrder scanLineOrder)
         {
             //current and end widths
-            Int32 destRowSize = this.PackedRowByteWidth(this.ExpandedBitsPerPixel, destPackingHorizontal);
-            Int32 destRowCount = this.PackedRowCount(destPackingVertical);
-            Int32 currentRowSize = this.PackedRowByteWidth(this.ExpandedBitsPerPixel, sourcePackingHorizontal);
-            Int32 currentRowCount = this.PackedRowCount(sourcePackingVertical);
+            Int32 destRowSize = PixelCalculations.PackedRowByteWidth(this.ExpandedBitsPerPixel, destPackingHorizontal, this.Metadata.Width);
+            Int32 destRowCount = PixelCalculations.PackedRowCount(destPackingVertical, this.Metadata.Height);
+            Int32 currentRowSize = PixelCalculations.PackedRowByteWidth(this.ExpandedBitsPerPixel, sourcePackingHorizontal, this.Metadata.Width);
+            Int32 currentRowCount = PixelCalculations.PackedRowCount(sourcePackingVertical, this.Metadata.Height);
 
             //width of actualy bytes to read for a given row
             Int32 byteWidth = ((this.Metadata.BitsPerDataPixel / 8) * this.Metadata.Width);
@@ -417,39 +392,14 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
             return new MemoryStream(bitmapData);
         }
 
-        /// <summary>Converts data from the current format to another specified format</summary>
-        /// <param name="data">Decompressed data to convert</param>
-        /// <param name="formatStart">Format to convert from</param>
-        /// <param name="formatEnd">Format to convert to</param>
-        /// <returns>New byte data</returns>
-        protected MemoryStream ConvertData(MemoryStream inputData, PixelFormat formatStart, PixelFormat formatEnd)
-        {
-            MemoryStream result = null;
-
-            //translate pixel formats
-            LibAVPixelFormat sourceFormat = formatStart.ToLibAVPixelFormat();
-            LibAVPixelFormat destFormat = formatEnd.ToLibAVPixelFormat();
-
-            using (SWScale scale = new SWScale(
-                        LibAVPictureDetail.Build(this.Metadata.Width, this.Metadata.Height, sourceFormat),
-                        LibAVPictureDetail.Build(this.Metadata.Width, this.Metadata.Height, destFormat),
-                        ResizeOptions.Lanczos))
-            {
-                MemoryStream outStream = null;
-                scale.Transform(inputData, out outStream);
-                result = outStream;
-            }
-
-            return result;
-        }
-
         /// <summary>Retrieves the pixel data in the specified format, in the specified scan line order</summary>
+        /// <param name="pixelConverter">Interface used to convert the pixel data if necessary</param>
         /// <param name="format">Expected output format of the data</param>
         /// <param name="order">Expected scan line order of the output data</param>
         /// <param name="horizontalPacking">Horizontal packing of bytes for output</param>
         /// <param name="verticalPacking">Vertical packing of rows for output</param>
         /// <returns>Binary pixel dataof the converted data</returns>
-        public MemoryStream GetPixelData(PixelFormat format, ScanLineOrder order, Int32 horizontalPacking, Int32 verticalPacking)
+        public MemoryStream GetPixelData(IPixelConverter pixelConverter, PixelFormat format, ScanLineOrder order, Int32 horizontalPacking, Int32 verticalPacking)
         {
             MemoryStream dataStream = this.NativeBinaryData;
 
@@ -467,7 +417,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
 
             //convert as necessary
             if (format != this.Format)
-                dataStream = this.ConvertData(dataStream, this.Format, format);
+                dataStream = pixelConverter.ConvertData(dataStream, this.Format, format, horizontalPacking, verticalPacking, this.Metadata.Width, this.Metadata.Height, this.ExpandedBitsPerPixel);
 
             //widen data to the destination horizontal and vertical packing specified
             if (horizontalPacking != 0 || verticalPacking != 0)
@@ -475,143 +425,6 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
 
             //in a return state
             return dataStream;
-        }
-        #endregion
-
-
-        #region Conversion methods
-        /// <param name="horizontalPacking">Row packing</param>
-        /// <param name="verticalPacking">Row count to align to</param>
-        protected Byte[] ConvertRgb24ToRgba(Byte[] data, Int32 horizontalPacking, Int32 verticalPacking)
-        {
-            Int32 dataRowWidth = this.PackedRowByteWidth(this.ExpandedBitsPerPixel, horizontalPacking);
-            Int32 dataRowCount = this.PackedRowCount(verticalPacking);
-            Int32 newRowWidth = this.PackedRowByteWidth(RgbQuad.BitsPerPixel, horizontalPacking);
-
-            Byte[] rgba = new Byte[newRowWidth * dataRowCount];
-
-            //constant speedup
-            Int32 srcWidth = (this.Metadata.Width * 3);
-
-            //loop rows
-            for (Int32 row = 0; row < dataRowCount; ++row)
-            {
-                Int32 srcDataOffset = (row * dataRowWidth);
-                Int32 destDataOffset = (row * newRowWidth);
-                Int32 srcPixelX = 0, destPixelX = 0;
-
-                while (srcPixelX < srcWidth)
-                {
-                    //save a bit of time on additions?
-                    Int32 destOffset = destDataOffset + destPixelX;
-                    Int32 srcOffset= srcDataOffset + srcPixelX;
-
-                    rgba[destOffset] = data[srcOffset];             //blue
-                    rgba[destOffset + 1] = data[srcOffset + 1];     //green
-                    rgba[destOffset + 2] = data[srcOffset + 2];     //red
-                    rgba[destOffset + 3] = 255;                     //alpha
-
-                    //increment
-                    srcPixelX += RgbTriplet.BytesPerPixel;
-                    destPixelX += RgbQuad.BytesPerPixel;
-                }
-            }
-
-            return rgba;
-        }
-
-        /// <param name="horizontalPacking">Row packing</param>
-        /// <param name="verticalPacking">Row count to align to</param>
-        protected Byte[] ConvertRgb16_555_ToRgba(Byte[] data, Int32 horizontalPacking, Int32 verticalPacking)
-        {
-            Int32 dataRowWidth = this.PackedRowByteWidth(this.ExpandedBitsPerPixel, horizontalPacking);
-            Int32 dataRowCount = this.PackedRowCount(verticalPacking);
-            Int32 newRowWidth = this.PackedRowByteWidth(RgbQuad.BitsPerPixel, horizontalPacking);
-
-            Byte[] rgba = new Byte[newRowWidth * dataRowCount];
-
-            //constant speedup
-            Int32 srcWidth = (this.Metadata.Width * 2);
-
-            //loop rows
-            for (Int32 row = 0; row < dataRowCount; ++row)
-            {
-                Int32 srcDataOffset = (row * dataRowWidth);
-                Int32 destDataOffset = (row * newRowWidth);
-                Int32 srcPixelX = 0, destPixelX = 0;
-
-                while (srcPixelX < srcWidth)
-                {
-                    //save a bit of time on additions?
-                    Int32 destOffset = destDataOffset + destPixelX;
-                    Int32 srcOffset= srcDataOffset + srcPixelX;
-
-                    UInt16 pixel = ReusableIO.ReadUInt16FromArray(data, srcOffset);
-
-                    /* 
-                     * expecting Xrrrrrgggggbbbbb; the typical approach, I'm told, is to take
-                     * the 3 most significant and use them for the missing least significant
-                    */
-                    Byte first = (Byte)(pixel & 0x001F);
-                    Byte second = (Byte)((pixel & 0x03E0) >> 5);
-                    Byte third = (Byte)((pixel & 0x7C00) >> 10);
-                    Byte mask = 0x1C;   //top three bits of 5 bit nibble
-                    first = (Byte)((first << 3) | ((first & mask) >> 2));
-                    second = (Byte)((second << 3) | ((second & mask) >> 2));
-                    third = (Byte)((third << 3) | ((third & mask) >> 2));
-
-                    rgba[destOffset] = first;            //blue
-                    rgba[destOffset + 1] = second;        //green
-                    rgba[destOffset + 2] = third;      //red
-                    rgba[destOffset + 3] = 255;                         //alpha
-
-                    //increment
-                    srcPixelX += 2;
-                    destPixelX += RgbQuad.BytesPerPixel;
-                }
-            }
-
-            return rgba;
-        }
-
-        protected Byte[] ConvertJfifYCbCrToRgba(Byte[] data, Int32 horizontalPacking, Int32 verticalPacking)
-        {
-            Int32 dataRowWidth = this.PackedRowByteWidth(this.ExpandedBitsPerPixel, horizontalPacking);
-            Int32 dataRowCount = this.PackedRowCount(verticalPacking);
-            Int32 newRowWidth = this.PackedRowByteWidth(RgbQuad.BitsPerPixel, horizontalPacking);
-
-            Byte[] rgba = new Byte[newRowWidth * dataRowCount];
-            //loop rows
-            for (Int32 row = 0; row < dataRowCount; ++row)
-            {
-                Int32 srcDataOffset = (row * dataRowWidth);
-                Int32 destDataOffset = (row * newRowWidth);
-                Int32 srcPixelX = 0, destPixelX = 0;
-
-                while (srcPixelX < (this.Metadata.Width * 3))
-                {
-                    Double Y = data[srcDataOffset + srcPixelX];
-                    Double Cb = data[srcDataOffset + srcPixelX + 1];
-                    Double Cr = data[srcDataOffset + srcPixelX + 2];
-                    Double red      = Y + ((Cr - 128) * 1.402);
-                    Double green    = Y - ((Cb - 128) * 0.34414) - ((Cr - 128) * 0.71414);
-                    Double blue     = Y + ((Cb - 128) * 1.772);
-                    Byte redByte = red <= 0 ? (Byte)0 : red >= 255 ? (Byte)255 : Convert.ToByte(red);
-                    Byte greenByte = green <= 0 ? (Byte)0 : green >= 255 ? (Byte)255 : Convert.ToByte(green);
-                    Byte blueByte = blue <= 0 ? (Byte)0 : blue >= 255 ? (Byte)255 : Convert.ToByte(blue);
-
-                    rgba[destDataOffset + destPixelX] = blueByte;       //blue
-                    rgba[destDataOffset + destPixelX + 1] = greenByte;  //green
-                    rgba[destDataOffset + destPixelX + 2] = redByte;    //red
-                    rgba[destDataOffset + destPixelX + 3] = 255;        //alpha
-
-                    //increment
-                    srcPixelX += RgbTriplet.BytesPerPixel;
-                    destPixelX += RgbQuad.BytesPerPixel;
-                }
-            }
-
-            return rgba;
         }
         #endregion
 
