@@ -12,6 +12,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
         protected IList<PixelBase> pixels;
         #endregion
 
+
         #region Properties
         /// <summary>Exposes the palette color list</summary>
         /// <remarks>The data is fully decoded (i.e.: Y'UV4:4:4 as opposed to Y'UV4:2:2</remarks>
