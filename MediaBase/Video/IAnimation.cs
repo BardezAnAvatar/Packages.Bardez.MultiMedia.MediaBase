@@ -7,7 +7,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
     public interface IAnimation : IImageSet
     {
         /// <summary>Returns an IList containing an IList of indeces meant to be used in conjunction with <see cref="IImageSet.GetFrame(Int32)"/></summary>
-        /// <returns></returns>
+        /// <returns>The collection of animations, which in turn are collections of format frame indeces to get specific frames from</returns>
         IList<IList<Int32>> GetFrameAnimations();
     }
 }
