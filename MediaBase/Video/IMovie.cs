@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Bardez.Projects.BasicStructures.Win32.Audio;
+using Bardez.Projects.MultiMedia.MediaBase.Video;
 
 namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
 {
@@ -9,7 +10,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
     {
         /// <summary>Fetches the next MediaBase Frame for output</summary>
         /// <returns>A MediaBase Frame for output</returns>
-        Frame GetNextFrame();
+        IMultimediaVideoFrame GetNextFrame();
 
         /// <summary>Resets the video stream to the beginning</summary>
         void ResetVideo();
@@ -27,7 +28,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
         Byte[] GetAudioBlock(Int32 blockNumber, Int32 streamNumber);
 
         /// <summary>Exposes the event for timer elapse</summary>
-        event Action<Frame> PlayFrame;
+        event Action<IMultimediaVideoFrame> PlayFrame;
 
         /// <summary>Control method to clear the TimerElapsed event delegates</summary>
         void ClearTimerElapsed();
