@@ -3,7 +3,7 @@ using System.IO;
 
 using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels.Enums;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
+namespace Bardez.Projects.MultiMedia.MediaBase.Video.Pixels
 {
     /// <summary>Interface defining common methods for pixel conversion</summary>
     /// <remarks>LibAV will have its own converter, but should not be in MediaBase</remarks>
