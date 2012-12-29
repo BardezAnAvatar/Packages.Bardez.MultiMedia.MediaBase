@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bardez.Projects.MultiMedia.MediaBase.Render
+namespace Bardez.Projects.Multimedia.MediaBase.Render
 {
     /// <summary>This interface defines methods and events common to multimedia stream renderers</summary>
     /// <remarks>Classes implementing this interface will have frame buffers to render from</remarks>

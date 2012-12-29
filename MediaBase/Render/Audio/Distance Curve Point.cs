@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Render.Audio
+namespace Bardez.Projects.Multimedia.MediaBase.Render.Audio
 {
     /// <summary>Represents a point on a distance curve and its value</summary>
     public class DistanceCurvePoint

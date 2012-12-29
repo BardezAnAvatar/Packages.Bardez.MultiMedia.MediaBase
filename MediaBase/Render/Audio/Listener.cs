@@ -2,7 +2,7 @@
 
 using Bardez.Projects.BasicStructures.ThreeDimensional;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Render.Audio
+namespace Bardez.Projects.Multimedia.MediaBase.Render.Audio
 {
     /// <summary>
     ///     Represents the location in virtual space that receives audio.

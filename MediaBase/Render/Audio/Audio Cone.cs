@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Render.Audio
+namespace Bardez.Projects.Multimedia.MediaBase.Render.Audio
 {
     /// <summary>Represents a cone of audio. Values are in Radians.</summary>
     public class AudioCone

@@ -2,7 +2,7 @@
 
 using Bardez.Projects.BasicStructures.Win32.Audio;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Render.Audio
+namespace Bardez.Projects.Multimedia.MediaBase.Render.Audio
 {
     /// <summary>This interface defines commands to receive and process audio data</summary>
     /// <remarks>

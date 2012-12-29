@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using Bardez.Projects.BasicStructures.ThreeDimensional;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Render.Audio
+namespace Bardez.Projects.Multimedia.MediaBase.Render.Audio
 {
     /// <summary>Represents source parameters for audio being rendered. Used for 3D audio.</summary>
     /// <remarks>This is an attempt to merge XAudio2 and OpenAL 3D effects</remarks>
