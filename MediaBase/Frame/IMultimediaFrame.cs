@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Bardez.Projects.MultiMedia.MediaBase
+namespace Bardez.Projects.Multimedia.MediaBase.Frame
 {
     /// <summary>Defines an basic interface for common elements of audio, video and metadata frames of data samples</summary>
     /// <remarks>
