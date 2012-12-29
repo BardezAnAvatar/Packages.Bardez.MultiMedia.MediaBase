@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
+namespace Bardez.Projects.Multimedia.MediaBase.Frame.Image
 {
     /// <summary>Interface to pull information indicating animation set information</summary>
     public interface IAnimation : IImageSet
