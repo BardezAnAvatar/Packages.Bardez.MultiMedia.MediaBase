@@ -7,10 +7,10 @@ using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels.Enums;
 using Bardez.Projects.MultiMedia.MediaBase.Video;
 using Bardez.Projects.MultiMedia.MediaBase.Video.Pixels;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
+namespace Bardez.Projects.Multimedia.MediaBase.Frame.Image
 {
     /// <summary>Represents a single image instance, be it a bitmap, PNG, JPEG/JFIF or frame of animation from an audio/video movie or animated picture</summary>
-    public class BasicVideoFrame : IMultimediaVideoFrame
+    public class BasicImageFrame : IMultimediaImageFrame
     {
         #region Properties
         /// <summary>Exposes the underlying image binary data, possibly interpreted.</summary>
@@ -20,18 +20,18 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
 
         #region Construction
         /// <summary>Default constructor</summary>
-        public BasicVideoFrame() : this(null) { }
+        public BasicImageFrame() : this(null) { }
 
         /// <summary>definition constructor</summary>
         /// <param name="data">PixelData structure defining and containing the pixel data</param>
-        public BasicVideoFrame(PixelData data)
+        public BasicImageFrame(PixelData data)
         {
             this.Pixels = data;
         }
         #endregion
 
 
-        #region IMultimediaVideoFrame implementation
+        #region IMultimediaImageFrame implementation
         /// <summary>Exposes the data of a multimedia frame</summary>
         public Stream Data
         {
@@ -39,7 +39,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
         }
 
         /// <summary>The group of metadata describing the representation details of the data stream</summary>
-        public VideoMetaData Metadata
+        public ImageMetadata Metadata
         {
             get { return this.Pixels.Metadata; }
         }
@@ -67,29 +67,22 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
         }
 
         /// <summary>Dispose pattern for the underlying stream</summary>
-        /// <param name="finalizing"></param>
-        protected virtual void Dispose(Boolean finalizing)
+        /// <param name="managedObjectsStillExist">Flag indicating whether the object is deterministically disposing or is finalizing</param>
+        protected virtual void Dispose(Boolean managedObjectsStillExist)
         {
-            //unmanaged resources
-            if (this.Pixels.NativeBinaryData != null)
+            if (managedObjectsStillExist)
             {
-                this.Pixels.NativeBinaryData.Dispose();
-                this.Pixels.NativeBinaryData = null;
-            }
+                //managed resources
+                if (this.Pixels.NativeBinaryData != null)
+                {
+                    this.Pixels.NativeBinaryData.Dispose();
+                    this.Pixels.NativeBinaryData = null;
+                }
 
-            //managed resources
-            if (!finalizing)
-            {
                 this.Pixels.Metadata.DataPalette = null;
                 this.Pixels.Metadata = null;
                 this.Pixels = null;
             }
-        }
-
-        /// <summary>Finalizer</summary>
-        ~BasicVideoFrame()
-        {
-            this.Dispose(true);
         }
         #endregion
     }
