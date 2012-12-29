@@ -14,7 +14,7 @@ namespace Bardez.Projects.Multimedia.MediaBase.Frame.Image
     {
         #region Properties
         /// <summary>The group of metadata describing the representation details of the data stream</summary>
-        ImageMetaData Metadata { get; }
+        ImageMetadata Metadata { get; }
         #endregion
 
 
