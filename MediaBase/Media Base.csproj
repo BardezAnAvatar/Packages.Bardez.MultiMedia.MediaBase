@@ -8,7 +8,7 @@
     <ProjectGuid>{31CA90A7-1628-493B-A99B-8B9F6899158F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bardez.Projects.InfinityPlus1.FileFormats.MediaBase</RootNamespace>
+    <RootNamespace>Bardez.Projects.Multimedia.MediaBase</RootNamespace>
     <AssemblyName>Media Base</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -67,34 +67,48 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Container\IMultimediaContainer.cs" />
+    <Compile Include="Container\Stream Processing Info.cs" />
+    <Compile Include="Container\Stream Type.cs" />
+    <Compile Include="Frame\Audio\IMultimediaAudioFrame.cs" />
+    <Compile Include="Frame\Buffers\IMultimediaFrameStreamBuffers.cs" />
+    <Compile Include="Frame\Image\Image Metadata.cs" />
+    <Compile Include="Frame\IMultimediaFrame.cs" />
+    <Compile Include="Frame\Buffers\IMultimediaFrameBuffer.cs" />
+    <Compile Include="Frame\IMultimediaStreamingFrame.cs" />
+    <Compile Include="Frame\Streaming Metadata.cs" />
+    <Compile Include="Management\IMultimediaController.cs" />
     <Compile Include="Render\Audio\Audio Cone.cs" />
     <Compile Include="Render\Audio\Audio Source Params.cs" />
     <Compile Include="Render\Audio\Distance Curve Point.cs" />
     <Compile Include="Render\Audio\Emitter.cs" />
     <Compile Include="Render\Audio\IAudio Renderer.cs" />
     <Compile Include="Render\Audio\Listener.cs" />
-    <Compile Include="Video\IMovie.cs" />
-    <Compile Include="Video\Enums\Scan Line Order.cs" />
-    <Compile Include="Video\Frame.cs" />
-    <Compile Include="Video\IAnimation.cs" />
-    <Compile Include="Audio\IAudio.cs" />
-    <Compile Include="Video\IImage.cs" />
+    <Compile Include="Render\IAVStreamRenderManager.cs" />
+    <Compile Include="Frame\Video\IMovie.cs" />
+    <Compile Include="Data\Pixels\Enums\Scan Line Order.cs" />
+    <Compile Include="Frame\Image\Basic Image Frame.cs" />
+    <Compile Include="Frame\Image\IAnimation.cs" />
+    <Compile Include="Frame\Image\IImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Video\IImageSet.cs" />
-    <Compile Include="Video\ITimer.cs" />
-    <Compile Include="Video\Pixels\Enums\Pixel Format.cs" />
-    <Compile Include="Video\Pixels\IPixelConverter.cs" />
-    <Compile Include="Video\Pixels\Palette.cs" />
-    <Compile Include="Video\Pixels\Pixel Base.cs" />
-    <Compile Include="Video\Pixels\Pixel Calculations.cs" />
-    <Compile Include="Video\Pixels\Basic Pixel Converter.cs" />
-    <Compile Include="Video\Pixels\Pixel Data.cs" />
-    <Compile Include="Video\Pixels\RGB Quad.cs" />
-    <Compile Include="Video\Pixels\RGB Triplet.cs" />
-    <Compile Include="Video\Pixels\YUV 444.cs" />
-    <Compile Include="Video\Resize\Bilinear Float Space.cs" />
-    <Compile Include="Video\Resize\Delegates.cs" />
-    <Compile Include="Video\Resize\Nearest Neighbor Integer Space.cs" />
+    <Compile Include="Frame\Image\IImageSet.cs" />
+    <Compile Include="Frame\Video\IMultimediaVideoFrame.cs" />
+    <Compile Include="Frame\Image\IMultimediaImageFrame.cs" />
+    <Compile Include="Management\ITimer.cs" />
+    <Compile Include="Data\Pixels\Enums\Pixel Format.cs" />
+    <Compile Include="Data\Pixels\IPixelConverter.cs" />
+    <Compile Include="Data\Pixels\Palette.cs" />
+    <Compile Include="Data\Pixels\Pixel Base.cs" />
+    <Compile Include="Data\Pixels\Pixel Calculations.cs" />
+    <Compile Include="Data\Pixels\Basic Pixel Converter.cs" />
+    <Compile Include="Data\Pixels\Pixel Data.cs" />
+    <Compile Include="Data\Pixels\RGB Quad.cs" />
+    <Compile Include="Data\Pixels\RGB Triplet.cs" />
+    <Compile Include="Data\Pixels\YUV 444.cs" />
+    <Compile Include="Data\Resize\Bilinear Float Space.cs" />
+    <Compile Include="Data\Resize\Delegates.cs" />
+    <Compile Include="Data\Resize\Nearest Neighbor Integer Space.cs" />
+    <Compile Include="Render\Image\IRendererImage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Basic Structures\Basic Structures.csproj">
@@ -110,6 +124,7 @@
       <Name>Utility</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
