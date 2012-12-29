@@ -7,14 +7,14 @@ using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels.Enums;
 using Bardez.Projects.MultiMedia.MediaBase;
 using Bardez.Projects.MultiMedia.MediaBase.Video.Pixels;
 
-namespace Bardez.Projects.MultiMedia.MediaBase.Video
+namespace Bardez.Projects.Multimedia.MediaBase.Frame.Image
 {
-    /// <summary>Defines an interface common for multimedia video frame implementations</summary>
-    public interface IMultimediaVideoFrame : IMultimediaFrame
+    /// <summary>Interface defining the common elements and operations for an image frame</summary>
+    public interface IMultimediaImageFrame : IMultimediaFrame
     {
         #region Properties
         /// <summary>The group of metadata describing the representation details of the data stream</summary>
-        VideoMetaData Metadata { get; }
+        ImageMetaData Metadata { get; }
         #endregion
 
 

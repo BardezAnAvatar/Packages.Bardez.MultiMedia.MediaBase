@@ -2,15 +2,16 @@
 
 using Bardez.Projects.BasicStructures.Win32.Audio;
 using Bardez.Projects.MultiMedia.MediaBase.Video;
+using Bardez.Projects.Multimedia.MediaBase.Frame.Image;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
+namespace Bardez.Projects.Multimedia.MediaBase.Frame.Video
 {
     /// <summary>Interface for movies that can return a frame sequentially for processing</summary>
     public interface IMovie : IWaveFormatEx
     {
         /// <summary>Fetches the next MediaBase Frame for output</summary>
         /// <returns>A MediaBase Frame for output</returns>
-        IMultimediaVideoFrame GetNextFrame();
+        IMultimediaImageFrame GetNextFrame();
 
         /// <summary>Resets the video stream to the beginning</summary>
         void ResetVideo();
@@ -28,7 +29,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
         Byte[] GetAudioBlock(Int32 blockNumber, Int32 streamNumber);
 
         /// <summary>Exposes the event for timer elapse</summary>
-        event Action<IMultimediaVideoFrame> PlayFrame;
+        event Action<IMultimediaImageFrame> PlayFrame;
 
         /// <summary>Control method to clear the TimerElapsed event delegates</summary>
         void ClearTimerElapsed();
