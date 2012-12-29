@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 
+using Bardez.Projects.BasicStructures.Math;
 using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Enums;
 using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels.Enums;
+using Bardez.Projects.Multimedia.MediaBase.Frame.Image;
 using Bardez.Projects.MultiMedia.MediaBase.Video;
 using Bardez.Projects.MultiMedia.MediaBase.Video.Pixels;
 using Bardez.Projects.ReusableCode;
@@ -16,7 +18,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
     {
         #region Fields
         /// <summary>Exposes the group of metadata</summary>
-        public VideoMetaData Metadata { get; set; }
+        public ImageMetadata Metadata { get; set; }
 
         /// <summary>Represents the binary array of pixel data read from source.</summary>
         /// <value>The data must be either palette-indexed or fully decoded to a multiple of 8 bits. Y'UV 4:2:2 would not be acceptable, not Y'V12, but Y'UV 4:4:4 would be.</value>
@@ -45,7 +47,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
         /// <summary>Definition constructor</summary>
         /// <param name="data">MemoryStream containing pixel data</param>
         /// <param name="metadata">Metadata for the pixels, declaring form, shape and other parameters</param>
-        public PixelData(MemoryStream data, VideoMetaData metadata)
+        public PixelData(MemoryStream data, ImageMetadata metadata)
         {
             this.nativeBinaryData = data;
             this.Metadata = metadata;
@@ -54,7 +56,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
         /// <summary>Definition constructor</summary>
         /// <param name="binary">Byte data of the pixel data</param>
         /// <param name="metadata">Metadata for the pixels, declaring form, shape and other parameters</param>
-        public PixelData(Byte[] binary, VideoMetaData metadata)
+        public PixelData(Byte[] binary, ImageMetadata metadata)
             : this(new MemoryStream(binary), metadata) { }
 
         /// <summary>Definition constructor, assumes no palette</summary>
@@ -70,7 +72,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
         /// <param name="originX">Horizontal origin of the frame</param>
         /// <param name="originY">Vertical origin of the frame</param>
         public PixelData(MemoryStream binary, ScanLineOrder order, PixelFormat format, Palette palette, Int32 height, Int32 width, Int32 rowPacking, Int32 heightPacking, Int32 bitsPerStreamPixel, Int64 originX, Int64 originY)
-            : this(binary, new VideoMetaData(height, width, rowPacking, heightPacking, bitsPerStreamPixel, originX, originY, format, order, palette)) { }
+            : this(binary, new ImageMetadata(height, width, rowPacking, heightPacking, bitsPerStreamPixel, originX, originY, format, order, Rational.One, palette)) { }
 
         /// <summary>Definition constructor, assumes no palette</summary>
         /// <param name="binary">Byte data of the pixel data</param>
