@@ -1,0 +1,6 @@
+Multimedia:
+	Data		(pixels, resize, etc.)
+	Container 	(containers for wholeness of frames of data: avi, LibAV, etc.)
+	Frame		(containers for data groups: Float audio, PCM audio, Image data, etc.)
+	Management	(When to play what)
+	Render		(accepts frames and renders them to video, audio, disk, etc.)
