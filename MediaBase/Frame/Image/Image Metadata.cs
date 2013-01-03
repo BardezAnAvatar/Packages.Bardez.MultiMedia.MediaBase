@@ -3,7 +3,7 @@
 using Bardez.Projects.BasicStructures.Math;
 using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Enums;
 using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels;
-using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels.Enums;
+using Bardez.Projects.Multimedia.MediaBase.Data.Pixels.Enums;
 
 namespace Bardez.Projects.Multimedia.MediaBase.Frame.Image
 {
