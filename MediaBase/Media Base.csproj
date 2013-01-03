@@ -77,12 +77,14 @@
     <Compile Include="Frame\Buffers\IMultimediaFrameBuffer.cs" />
     <Compile Include="Frame\IMultimediaStreamingFrame.cs" />
     <Compile Include="Frame\Streaming Metadata.cs" />
+    <Compile Include="Management\Basic Multimedia Controller.cs" />
     <Compile Include="Management\IMultimediaController.cs" />
     <Compile Include="Render\Audio\Audio Cone.cs" />
     <Compile Include="Render\Audio\Audio Source Params.cs" />
     <Compile Include="Render\Audio\Distance Curve Point.cs" />
     <Compile Include="Render\Audio\Emitter.cs" />
     <Compile Include="Render\Audio\IAudio Renderer.cs" />
+    <Compile Include="Render\Audio\IAudioRenderManager.cs" />
     <Compile Include="Render\Audio\Listener.cs" />
     <Compile Include="Render\IAVStreamRenderManager.cs" />
     <Compile Include="Frame\Video\IMovie.cs" />
@@ -109,6 +111,8 @@
     <Compile Include="Data\Resize\Delegates.cs" />
     <Compile Include="Data\Resize\Nearest Neighbor Integer Space.cs" />
     <Compile Include="Render\Image\IRendererImage.cs" />
+    <Compile Include="Render\Subtitle\ISubtitleRenderManager.cs" />
+    <Compile Include="Render\Video\IVideoRenderManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Basic Structures\Basic Structures.csproj">
@@ -124,7 +128,12 @@
       <Name>Utility</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="media base design.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Frame\Subtitle\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
