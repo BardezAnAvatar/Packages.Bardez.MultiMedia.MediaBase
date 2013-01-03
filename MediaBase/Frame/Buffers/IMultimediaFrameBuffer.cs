@@ -5,7 +5,7 @@ using Bardez.Projects.Multimedia.MediaBase.Frame;
 namespace Bardez.Projects.Multimedia.MediaBase.Frame.Buffers
 {
     /// <summary>This interface defines a buffer for Mutlimedia frames</summary>
-    public interface IMultimediaFrameBuffer<FrameType> where FrameType : IMultimediaFrame
+    public interface IMultimediaFrameBuffer<FrameType> : IDisposable where FrameType : IMultimediaFrame
     {
         #region Properties
         /// <summary>Exposes a flag indicating whether or not the buffer is full</summary>
