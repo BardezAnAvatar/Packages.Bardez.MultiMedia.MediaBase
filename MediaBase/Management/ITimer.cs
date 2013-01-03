@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
+namespace Bardez.Projects.Multimedia.MediaBase.Management
 {
     /// <summary>Interface for a custom timer</summary>
     public interface ITimer : IDisposable
@@ -12,6 +12,7 @@ namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video
         TimeSpan StartTime { get; set; }
 
         /// <summary>Public-facing timer event</summary>
+        /// <remarks>Elapsed should be the time since the timer was last started, not since it was created or first started</remarks>
         event Action<TimeSpan> Elapsed;
 
         /// <summary>Starts the timer</summary>
