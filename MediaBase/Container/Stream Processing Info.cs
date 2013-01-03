@@ -15,5 +15,7 @@ namespace Bardez.Projects.Multimedia.MediaBase.Container
         /// <summary>Exposes the type of the multimedia stream in the container</summary>
         public StreamMediaType MediaType { get; set; }
         #endregion
+
+        //TODO: add additional details like sample rate, format, etc. etc. here
     }
 }
