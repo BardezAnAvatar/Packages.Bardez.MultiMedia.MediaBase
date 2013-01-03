@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
+namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels
 {
     /// <summary>Represents a color palette for palette-encoded pixel data or similar means.</summary>
     public class Palette

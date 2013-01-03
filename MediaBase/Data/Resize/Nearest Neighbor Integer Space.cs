@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Resize
+namespace Bardez.Projects.Multimedia.MediaBase.Data.Resize
 {
     /// <summary>Performs implementations of bilinear interpolation in Integer-native space.</summary>
     public static class NearestNeighborIntegerSpace

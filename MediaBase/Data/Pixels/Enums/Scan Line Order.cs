@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Enums
+namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels.Enums
 {
     /// <summary>Indicates the order in which pixel data comes down the line</summary>
     public enum ScanLineOrder

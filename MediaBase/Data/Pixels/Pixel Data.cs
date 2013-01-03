@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 
 using Bardez.Projects.BasicStructures.Math;
-using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Enums;
 using Bardez.Projects.Multimedia.MediaBase.Data.Pixels.Enums;
 using Bardez.Projects.Multimedia.MediaBase.Frame.Image;
 using Bardez.Projects.MultiMedia.MediaBase.Video;
@@ -11,7 +10,7 @@ using Bardez.Projects.MultiMedia.MediaBase.Video.Pixels;
 using Bardez.Projects.ReusableCode;
 using Bardez.Projects.Utility;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
+namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels
 {
     /// <summary>Represents a single-source for an image's pixel data. This class will record the input type, and output pixel data as requested, converting as necessary</summary>
     public class PixelData

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels
+namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels
 {
     /// <summary>Describes a 24-bit value of RGB data</summary>
     public class RgbTriplet : PixelBase

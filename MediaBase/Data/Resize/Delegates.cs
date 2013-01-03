@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Resize
+namespace Bardez.Projects.Multimedia.MediaBase.Data.Resize
 {
     /// <summary>Performs a resize transform on the source data</summary>
     /// <param name="data">Array of input data to resample</param>

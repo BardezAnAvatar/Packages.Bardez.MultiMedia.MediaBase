@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
 
-using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Enums;
-using Bardez.Projects.InfinityPlus1.FileFormats.MediaBase.Video.Pixels;
+using Bardez.Projects.Multimedia.MediaBase.Data.Pixels;
 using Bardez.Projects.Multimedia.MediaBase.Data.Pixels.Enums;
 using Bardez.Projects.MultiMedia.MediaBase.Video;
 using Bardez.Projects.MultiMedia.MediaBase.Video.Pixels;
