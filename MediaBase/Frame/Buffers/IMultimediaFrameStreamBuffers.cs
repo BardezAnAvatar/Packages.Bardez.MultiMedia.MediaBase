@@ -9,7 +9,7 @@ using Bardez.Projects.Multimedia.MediaBase.Frame.Image;
 namespace Bardez.Projects.Multimedia.MediaBase.Frame.Buffers
 {
     /// <summary>This interface defines a buffer manager for multiple multimedia frame buffers</summary>
-    public interface IMultimediaFrameStreamBuffers
+    public interface IMultimediaFrameStreamBuffers : IDisposable
     {
         #region Properties
         /// <summary>Exposes a flag indicating whether or not the buffers are full</summary>
@@ -20,6 +20,9 @@ namespace Bardez.Projects.Multimedia.MediaBase.Frame.Buffers
 
 		/// <summary>Dictionary of audio stream processing records, the key being the stream number</summary>
         Dictionary<Int32, IMultimediaFrameBuffer<IMultimediaAudioFrame>> StreamsAudio { get; }
+
+        /// <summary>Dictionary of subtitle stream processing records, the key being the stream number</summary>
+        Dictionary<Int32, IMultimediaFrameBuffer<IMultimediaStreamingFrame>> StreamsSubtitle { get; }
         #endregion
     }
 }
