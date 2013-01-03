@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 
 using Bardez.Projects.Multimedia.MediaBase.Container;
+using Bardez.Projects.Multimedia.MediaBase.Render.Audio;
+using Bardez.Projects.Multimedia.MediaBase.Render.Subtitle;
+using Bardez.Projects.Multimedia.MediaBase.Render.Video;
 
 namespace Bardez.Projects.Multimedia.MediaBase.Management
 {
@@ -11,6 +14,18 @@ namespace Bardez.Projects.Multimedia.MediaBase.Management
         #region Properties
         /// <summary>Exposes the length of multimedia within this container</summary>
         TimeSpan Length { get; }
+
+        /// <summary>Collection of renderer managers for audio streams</summary>
+        IList<IAudioRenderManager> RenderManagersAudio { get; }
+
+        /// <summary>Collection of renderer managers for video streams</summary>
+        IList<IVideoRenderManager> RenderManagersVideo { get; }
+
+        /// <summary>Collection of renderer managers for subtitle streams</summary>
+        IList<ISubtitleRenderManager> RenderManagersSubtitle { get; }
+
+        /// <summary>Generates a collection of Stream processing info for whether or not to bother decoding a given stream</summary>
+        Dictionary<Int32, StreamProcessingInfo> StreamProcessing { get; }
         #endregion
 
 
