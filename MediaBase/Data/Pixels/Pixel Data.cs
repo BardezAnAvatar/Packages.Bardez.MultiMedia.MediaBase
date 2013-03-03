@@ -5,8 +5,8 @@ using System.IO;
 using Bardez.Projects.BasicStructures.Math;
 using Bardez.Projects.Multimedia.MediaBase.Data.Pixels.Enums;
 using Bardez.Projects.Multimedia.MediaBase.Frame.Image;
-using Bardez.Projects.MultiMedia.MediaBase.Video;
-using Bardez.Projects.MultiMedia.MediaBase.Video.Pixels;
+using Bardez.Projects.Multimedia.MediaBase.Video;
+using Bardez.Projects.Multimedia.MediaBase.Video.Pixels;
 using Bardez.Projects.ReusableCode;
 using Bardez.Projects.Utility;
 
@@ -246,88 +246,6 @@ namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels
         }
         #endregion
 
-
-        /// <summary>Flips pixel data scan line by scan line</summary>
-        /// <param name="data">Decompressed data to flip</param>
-        /// <returns>The vertically flipped data</returns>
-        /// <remarks>Uses the current pixel data's packing, not the destination's</remarks>
-        protected MemoryStream FlipVertical(MemoryStream data)
-        {
-            Int32 rowLength = PixelCalculations.PackedRowByteWidth(this.Metadata.ExpandedBitsPerPixel, this.Metadata.HorizontalPacking, this.Metadata.Width);
-            MemoryStream destination = new MemoryStream(Convert.ToInt32(data.Length));
-
-            //loop through half of the number of rows in the data
-            Int32 rows = this.Metadata.RowCount;
-
-            for (Int32 row = 0; row < rows; ++row) // 5/2 = 2 is what I am looking for. Don't flip the middle row; that's just silly.
-            {
-                Int32 destOffset = ((rows - 1) - row) * rowLength;                  //destination in data
-                Int32 sourceOffset = rowLength * row;                               //where to read from
-                Byte[] buffer = data.ReadBytesAtOffset(sourceOffset, rowLength);    //read initial data
-                destination.WriteAtOffset(destOffset, buffer);                      //copy opposite row to current row
-            }
-
-            return destination;
-        }
-
-        /// <summary>Adjusts the packing bytes of the data</summary>
-        /// <param name="data">Data to pack</param>
-        /// <param name="sourcePackingHorizontal">source horizontal packing</param>
-        /// <param name="sourcePackingVertical">source vertical packing</param>
-        /// <param name="destPackingHorizontal">target horizontal packing</param>
-        /// <param name="destPackingVertical">target vertical packing</param>
-        /// <param name="scanLineOrder">target scanline order</param>
-        /// <returns>The adjusted packed bytes</returns>
-        protected MemoryStream AdjustForPacking(MemoryStream data, Int32 sourcePackingHorizontal, Int32 sourcePackingVertical, Int32 destPackingHorizontal, Int32 destPackingVertical, ScanLineOrder scanLineOrder)
-        {
-            //current and end widths
-            Int32 destRowSize = PixelCalculations.PackedRowByteWidth(this.Metadata.ExpandedBitsPerPixel, destPackingHorizontal, this.Metadata.Width);
-            Int32 destRowCount = PixelCalculations.PackedRowCount(destPackingVertical, this.Metadata.Height);
-            Int32 currentRowSize = PixelCalculations.PackedRowByteWidth(this.Metadata.ExpandedBitsPerPixel, sourcePackingHorizontal, this.Metadata.Width);
-            Int32 currentRowCount = PixelCalculations.PackedRowCount(sourcePackingVertical, this.Metadata.Height);
-
-            //width of actualy bytes to read for a given row
-            Int32 byteWidth = ((this.Metadata.BitsPerDataPixel / 8) * this.Metadata.Width);
-
-            Byte[] bitmapData = new Byte[destRowSize * destRowCount];
-
-            //get the number of rows to copy
-            Int32 rowCopyCount = currentRowCount < destRowCount ? currentRowCount : destRowCount;
-            Int32 start = 0;
-
-            //determine the start and end position for the copy loop
-            switch (scanLineOrder)
-            {
-                case ScanLineOrder.BottomUp:
-                    start = destRowCount - rowCopyCount;
-                    break;
-                case ScanLineOrder.TopDown:
-                    start = 0;
-                    break;
-            }
-
-            //end loop condition
-            Int32 end = start + rowCopyCount;
-
-            //copy loop
-            for (Int32 row = start; row < end; ++row)
-            {
-                Int32 sourceOffset = (row * currentRowSize);
-                Int32 destOffset = (row * destRowSize);
-
-                if (sourceOffset < 0)
-                    sourceOffset = -sourceOffset;
-
-                if (destOffset < 0)
-                    destOffset = -destOffset;
-
-                Byte[] source = data.ReadBytesAtOffset(sourceOffset, byteWidth);
-                Array.Copy(source, 0, bitmapData, destOffset, byteWidth);
-            }
-
-            return new MemoryStream(bitmapData);
-        }
-
         /// <summary>Retrieves the pixel data in the specified format, in the specified scan line order</summary>
         /// <param name="pixelConverter">Interface used to convert the pixel data if necessary</param>
         /// <param name="format">Expected output format of the data</param>
@@ -345,11 +263,11 @@ namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels
 
             //flip if necessary
             if (this.Metadata.Order != order)
-                dataStream = this.FlipVertical(dataStream);    //vertically swap each pixel row
+                dataStream = pixelConverter.FlipVertical(dataStream, this.Metadata);    //vertically swap each pixel row
 
             //strip packing
             if (this.Metadata.HorizontalPacking != 0 || this.Metadata.VerticalPacking != 0)
-                dataStream = this.AdjustForPacking(dataStream, this.Metadata.HorizontalPacking, this.Metadata.VerticalPacking, 0, 0, order);     // it should know the existing packing for this instance, specify the new packing
+                dataStream = pixelConverter.AdjustForPacking(dataStream, this.Metadata, 0, 0);     // it should know the existing packing for this instance, specify the new packing
 
             //convert as necessary
             if (format != this.Metadata.Format)
@@ -357,7 +275,10 @@ namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels
 
             //widen data to the destination horizontal and vertical packing specified
             if (horizontalPacking != 0 || verticalPacking != 0)
-                dataStream = this.AdjustForPacking(dataStream, 0, 0, horizontalPacking, verticalPacking, order);     // it should know the existing packing for this instance, specify the new packing
+            {
+                ImageMetadata metadata = new ImageMetadata(this.Metadata.Height, this.Metadata.Width, 0, 0, this.Metadata.BitsPerDataPixel, this.Metadata.OriginX, this.Metadata.OriginY, this.Metadata.Format, this.Metadata.Order, this.Metadata.AspectRatio, null);
+                dataStream = pixelConverter.AdjustForPacking(dataStream, metadata, horizontalPacking, verticalPacking);     // it should know the existing packing for this instance, specify the new packing
+            }
 
             //in a return state
             return dataStream;
