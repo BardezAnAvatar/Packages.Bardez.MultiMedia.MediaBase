@@ -10,7 +10,7 @@ namespace Bardez.Projects.Multimedia.MediaBase.Frame
     {
         #region Properties
         /// <summary>Metadata for streaming</summary>
-        StreamingMetadata StreamingMetadata { get; }
+        StreamingMetadata MetadataStreaming { get; }
         #endregion
     }
 }
