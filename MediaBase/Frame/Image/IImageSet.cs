@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Bardez.Projects.MultiMedia.MediaBase.Video;
+using Bardez.Projects.Multimedia.MediaBase.Video;
 
 namespace Bardez.Projects.Multimedia.MediaBase.Frame.Image
 {

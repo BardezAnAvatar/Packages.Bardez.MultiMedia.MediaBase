@@ -1,8 +1,8 @@
 ﻿using System;
 
 using Bardez.Projects.BasicStructures.Win32.Audio;
-using Bardez.Projects.MultiMedia.MediaBase.Video;
 using Bardez.Projects.Multimedia.MediaBase.Frame.Image;
+using Bardez.Projects.Multimedia.MediaBase.Video;
 
 namespace Bardez.Projects.Multimedia.MediaBase.Frame.Video
 {
