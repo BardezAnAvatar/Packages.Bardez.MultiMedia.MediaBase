@@ -3,10 +3,10 @@ using System.IO;
 
 using Bardez.Projects.Multimedia.MediaBase.Data.Pixels;
 using Bardez.Projects.Multimedia.MediaBase.Data.Pixels.Enums;
-using Bardez.Projects.MultiMedia.MediaBase.Video.Pixels;
+using Bardez.Projects.Multimedia.MediaBase.Frame.Image;
 using Bardez.Projects.ReusableCode;
 
-namespace Bardez.Projects.MultiMedia.MediaBase.Video.Pixels
+namespace Bardez.Projects.Multimedia.MediaBase.Video.Pixels
 {
     /// <summary>Basic pixel dat converter, not especially efficient. No external dependencies.</summary>
     public class BasicPixelConverter : IPixelConverter
@@ -22,7 +22,7 @@ namespace Bardez.Projects.MultiMedia.MediaBase.Video.Pixels
         /// <param name="sourceHeight">Indicates the source height of the image data</param>
         /// <param name="decodedBitDepth">The bits per pixel once decoded</param>
         /// <returns>New byte data</returns>
-        public MemoryStream ConvertData(MemoryStream data, PixelFormat sourceFormat, PixelFormat destinationFormat, Int32 horizontalPacking, Int32 verticalPacking, Int32 sourceWidth, Int32 sourceHeight, Int32 decodedBitDepth)
+        public virtual MemoryStream ConvertData(MemoryStream data, PixelFormat sourceFormat, PixelFormat destinationFormat, Int32 horizontalPacking, Int32 verticalPacking, Int32 sourceWidth, Int32 sourceHeight, Int32 decodedBitDepth)
         {
             MemoryStream converted = null;
 
@@ -37,6 +37,88 @@ namespace Bardez.Projects.MultiMedia.MediaBase.Video.Pixels
                 throw new NotSupportedException("Other conversions not supported at this time.");
 
             return converted;
+        }
+
+        /// <summary>Flips pixel data scan line by scan line</summary>
+        /// <param name="data">Decompressed data to flip</param>
+        /// <param name="metadata">Image metadata for the source frame</param>
+        /// <returns>The vertically flipped data</returns>
+        /// <remarks>Uses the current pixel data's packing, not the destination's</remarks>
+        public virtual MemoryStream FlipVertical(MemoryStream data, ImageMetadata metadata)
+        {
+            Int32 rowLength = PixelCalculations.PackedRowByteWidth(metadata.ExpandedBitsPerPixel, metadata.HorizontalPacking, metadata.Width);
+            MemoryStream destination = new MemoryStream(Convert.ToInt32(data.Length));
+
+            //loop through half of the number of rows in the data
+            Int32 rows = metadata.RowCount;
+
+            for (Int32 row = 0; row < rows; ++row) // 5/2 = 2 is what I am looking for. Don't flip the middle row; that's just silly.
+            {
+                Int32 destOffset = ((rows - 1) - row) * rowLength;                  //destination in data
+                Int32 sourceOffset = rowLength * row;                               //where to read from
+                Byte[] buffer = data.ReadBytesAtOffset(sourceOffset, rowLength);    //read initial data
+                destination.WriteAtOffset(destOffset, buffer);                      //copy opposite row to current row
+            }
+
+            return destination;
+        }
+        
+        /// <summary>Adjusts the packing bytes of the data</summary>
+        /// <param name="data">Data to pack</param>
+        /// <param name="sourcePackingHorizontal">source horizontal packing</param>
+        /// <param name="sourcePackingVertical">source vertical packing</param>
+        /// <param name="destPackingHorizontal">target horizontal packing</param>
+        /// <param name="destPackingVertical">target vertical packing</param>
+        /// <param name="scanLineOrder">target scanline order</param>
+        /// <returns>The adjusted packed bytes</returns>
+        public virtual MemoryStream AdjustForPacking(MemoryStream data, ImageMetadata metadata, Int32 destPackingHorizontal, Int32 destPackingVertical)
+        {
+            //current and end widths
+            Int32 destRowSize = PixelCalculations.PackedRowByteWidth(metadata.ExpandedBitsPerPixel, destPackingHorizontal, metadata.Width);
+            Int32 destRowCount = PixelCalculations.PackedRowCount(destPackingVertical, metadata.Height);
+            Int32 currentRowSize = PixelCalculations.PackedRowByteWidth(metadata.ExpandedBitsPerPixel, metadata.HorizontalPacking, metadata.Width);
+            Int32 currentRowCount = PixelCalculations.PackedRowCount(metadata.VerticalPacking, metadata.Height);
+
+            //width of actualy bytes to read for a given row
+            Int32 byteWidth = ((metadata.BitsPerDataPixel / 8) * metadata.Width);
+
+            Byte[] bitmapData = new Byte[destRowSize * destRowCount];
+
+            //get the number of rows to copy
+            Int32 rowCopyCount = currentRowCount < destRowCount ? currentRowCount : destRowCount;
+            Int32 start = 0;
+
+            //determine the start and end position for the copy loop
+            switch (metadata.Order)
+            {
+                case ScanLineOrder.BottomUp:
+                    start = destRowCount - rowCopyCount;
+                    break;
+                case ScanLineOrder.TopDown:
+                    start = 0;
+                    break;
+            }
+
+            //end loop condition
+            Int32 end = start + rowCopyCount;
+
+            //copy loop
+            for (Int32 row = start; row < end; ++row)
+            {
+                Int32 sourceOffset = (row * currentRowSize);
+                Int32 destOffset = (row * destRowSize);
+
+                if (sourceOffset < 0)
+                    sourceOffset = -sourceOffset;
+
+                if (destOffset < 0)
+                    destOffset = -destOffset;
+
+                Byte[] source = data.ReadBytesAtOffset(sourceOffset, byteWidth);
+                Array.Copy(source, 0, bitmapData, destOffset, byteWidth);
+            }
+
+            return new MemoryStream(bitmapData);
         }
         #endregion
 
