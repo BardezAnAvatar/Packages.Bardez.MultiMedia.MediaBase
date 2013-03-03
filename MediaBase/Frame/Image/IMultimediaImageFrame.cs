@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 
-using Bardez.Projects.MultiMedia.MediaBase;
+using Bardez.Projects.Multimedia.MediaBase;
 using Bardez.Projects.Multimedia.MediaBase.Data.Pixels;
 using Bardez.Projects.Multimedia.MediaBase.Data.Pixels.Enums;
-using Bardez.Projects.MultiMedia.MediaBase.Video.Pixels;
+using Bardez.Projects.Multimedia.MediaBase.Video.Pixels;
 
 namespace Bardez.Projects.Multimedia.MediaBase.Frame.Image
 {
@@ -13,7 +13,7 @@ namespace Bardez.Projects.Multimedia.MediaBase.Frame.Image
     {
         #region Properties
         /// <summary>The group of metadata describing the representation details of the data stream</summary>
-        ImageMetadata Metadata { get; }
+        ImageMetadata MetadataImage { get; }
         #endregion
 
 

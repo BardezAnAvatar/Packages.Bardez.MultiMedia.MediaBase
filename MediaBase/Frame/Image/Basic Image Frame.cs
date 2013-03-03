@@ -3,8 +3,8 @@ using System.IO;
 
 using Bardez.Projects.Multimedia.MediaBase.Data.Pixels;
 using Bardez.Projects.Multimedia.MediaBase.Data.Pixels.Enums;
-using Bardez.Projects.MultiMedia.MediaBase.Video;
-using Bardez.Projects.MultiMedia.MediaBase.Video.Pixels;
+using Bardez.Projects.Multimedia.MediaBase.Video;
+using Bardez.Projects.Multimedia.MediaBase.Video.Pixels;
 
 namespace Bardez.Projects.Multimedia.MediaBase.Frame.Image
 {
@@ -38,7 +38,7 @@ namespace Bardez.Projects.Multimedia.MediaBase.Frame.Image
         }
 
         /// <summary>The group of metadata describing the representation details of the data stream</summary>
-        public ImageMetadata Metadata
+        public ImageMetadata MetadataImage
         {
             get { return this.Pixels.Metadata; }
         }
