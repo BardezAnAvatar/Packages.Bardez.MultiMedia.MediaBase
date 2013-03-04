@@ -1,16 +1,14 @@
 ﻿using System;
 
-using Bardez.Projects.Multimedia.MediaBase.Frame.Image;
+using Bardez.Projects.Multimedia.MediaBase.Frame;
 
-namespace Bardez.Projects.Multimedia.MediaBase.Render.Video
+namespace Bardez.Projects.Multimedia.MediaBase.Render.Subtitle
 {
-    public interface IVideoRenderManager : IAVStreamRenderManager
+    /// <summary>Defines an interface for a manager for rendering subtitle information</summary>
+    public interface ISubtitleRenderManager : IAVStreamRenderManager
     {
-        /// <summary>Event to raise for rendering video output.</summary>
-        /// <remarks>
-        ///     IMultimediaVideoFrame has Streaming metadata,
-        ///     which is only needed for the manger to read, not to expose
-        /// </remarks>
-        event Action<IMultimediaImageFrame> Render;
+        /// <summary>Event to raise for rendering subtitle output.</summary>
+        /// <remarks>Can be text or video, so not sure how to handle yet.</remarks>
+        event Action<IMultimediaStreamingFrame> Render;
     }
 }
