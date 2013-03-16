@@ -24,9 +24,21 @@ namespace Bardez.Projects.Multimedia.MediaBase.Render.Audio
         /// <remarks>"ConeOuterGain" in OpenAL</remarks>
         public Single OuterVolume { get; set; }
 
-        //TODO: Low-pass filters (dunno what this actually means) (for muffling)
+        #region Low-pass filters (dunno what this actually means) (for muffling)
+        /// <summary>LPF direct-path or reverb-path coefficient scaler on/within inner cone.</summary>
+        public Single InnerLowPassFilterCoefficient { get; set; }
 
-        //TODO: reverbs (dunno what their effect would be)
+        /// <summary>LPF direct-path or reverb-path coefficient scaler outside inner cone.</summary>
+        public Single OuterLowPassFilterCoefficient { get; set; }
+        #endregion
+
+        #region Reverbs (dunno what their effect would be)
+        /// <summary>Reverb send level scaler on or within inner cone. This must be within 0.0f to 2.0f.</summary>
+        public Single InnerReverbScaler;
+
+        /// <summary>Reverb send level scaler on/beyond outer cone. This must be within 0.0f to 2.0f.</summary>
+        public Single OuterReverbScaler;
+        #endregion
         #endregion
     }
 }
