@@ -86,6 +86,7 @@
     <Compile Include="Render\Audio\IAudio Renderer.cs" />
     <Compile Include="Render\Audio\IAudioRenderManager.cs" />
     <Compile Include="Render\Audio\Listener.cs" />
+    <Compile Include="Render\Audio\Perspective.cs" />
     <Compile Include="Render\IAVStreamRenderManager.cs" />
     <Compile Include="Frame\Video\IMovie.cs" />
     <Compile Include="Data\Pixels\Enums\Scan Line Order.cs" />

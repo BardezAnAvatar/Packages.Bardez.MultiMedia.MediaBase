@@ -9,19 +9,13 @@ namespace Bardez.Projects.Multimedia.MediaBase.Render.Audio
     /// <remarks>This is an attempt to merge XAudio2 and OpenAL 3D effects</remarks>
     public class AudioSourceParams
     {
-        public Vector<Single> Orientation { get; set; }
-        public Vector<Single> Position { get; set; }
-        public Vector<Single> Velocity { get; set; }
+        /// <summary>Audio emission source</summary>
+        public Emitter Emitter { get; set; }
+
+        /// <summary>Audio listening receptor</summary>
+        public Listener Listener { get; set; }
+
+        /// <summary>Not sure that this is needed</summary>
         public Boolean MuffleSound { get; set; }
-        public UInt32 CountChannels { get; set; }
-
-        /// <summary>Distance of each channel from Position if CountChannels > 1</summary>
-        public Single RadiusChannels { get; set; }
-
-        /// <summary>
-        ///     Collection of channel position Azimuths indicating where on the radius the channel
-        ///     with the corresponding index is located. See: http://en.wikipedia.org/wiki/Azimuth
-        /// </summary>
-        public IList<Single> ChannelPositionAzimuths { get; set; }
     }
 }
