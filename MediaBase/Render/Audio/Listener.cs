@@ -24,7 +24,7 @@ namespace Bardez.Projects.Multimedia.MediaBase.Render.Audio
         public Vector<Single> Velocity { get; set; }
 
         /// <summary>Represents the receiving cone of a sound.</summary>
-        /// <remarks>OpenAL does not seem to support this. Null is omnidirectional sound receipt. I will not want this for Infinity +1. But it's there for XAudio2.</remarks>
+        /// <remarks>OpenAL does not seem to support this. Null is omnidirectional sound receipt. I will not want a cone for Infinity +1. But it's there for XAudio2.</remarks>
         public AudioCone Cone { get; set; }
         #endregion
     }
