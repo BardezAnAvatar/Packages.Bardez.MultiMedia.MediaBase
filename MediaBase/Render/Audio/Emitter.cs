@@ -25,7 +25,7 @@ namespace Bardez.Projects.Multimedia.MediaBase.Render.Audio
         public Single RadiusAngleInner { get; set; }
 
         /// <summary>Number of emitters for this sound</summary>
-        public UInt32 ChanngelCount { get; set; }
+        public UInt32 ChannelCount { get; set; }
 
         /// <summary>Distance of each channel from Position if CountChannels > 1</summary>
         public Single RadiusChannel { get; set; }
