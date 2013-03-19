@@ -7,16 +7,22 @@ Namespace layout:
 
 
 Design Model:
-	Manager will hold a container
-	Manager will hold a collection (collections) or RenderManagers
-	Manager will pull data from container (in StreamingFrameBuffers) and pass into the RenderManagers.
-	Manager will give access of the StreamingFrameBuffer directly to RenderManagers
-	Manager will expose metadata of the streams (from container) to indicate to its owner which
+	Controller will hold a container
+	Controller will hold a collection (collections) or RenderManagers
+	Controller will pull data from container (in IMultimediaFrameBuffer) and pass into the RenderManagers.
+	Controller will give access of the IMultimediaFrameStreamBuffers directly to RenderManagers
+	Controller will expose metadata of the streams (from container) to indicate to its owner which
 		stream is what, so that the owner can subscribe to events from Manager's RenderManagers
 		(e.g.: two video streams, one subtitle, one video, could use a single renderer that layers.)
 		(e.g.: one video stream could have two renderers attached [display, disk writer])
 		(e.g.: 4 audio streams could have one renderer each simultaneously)
 		(e.g.: 2 video streams could render side-by-side simultaneously)
+
+	Container will expose metadata for channels such as renderable text to indicate available streams
+	Container will expose "default" stream options
+	Container will decode/return Frames to pass on to RenderManagement via IMultimediaFrameBuffer
+
+	Frame will encompass a single set of data samples for rendering, returned from container into RenderManager into Renderers
 	
 	RenderManagers will expose an AttemptRender and a Render event.
 	AttemptRender will be for Manager to pass in a timecode, at which point the render manager decides
@@ -27,5 +33,3 @@ Design Model:
 	Renderer will attach to a render event. This will then react to the data submitted in the frame
 		and render out to associated control, resource, etc.
 	
-	Container will expose metadata for channels such as renderable text to indicate available streams
-	Container will expose "default" stream options
