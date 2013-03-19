@@ -42,15 +42,16 @@ namespace Bardez.Projects.Multimedia.MediaBase.Render.Audio
         #region Methods
         /// <summary>Initializes this audio renderer to use the settings provided</summary>
         /// <param name="audioInfo">Collection of data that indicates what the format of the source audio is</param>
-        void Initialize(WaveFormatEx audioInfo);
+        /// <param name="destinationConfiguration">Configuration of audio channels for rendering output</param>
+        /// <param name="behavior">Behavior with which to render audio</param>
+        void Initialize(WaveFormatEx audioInfo, SpeakerConfiguration destinationConfiguration, AudioRenderStyle behavior);
 
         /// <summary>Submits data for rendering</summary>
         /// <param name="data">Audio samples to render</param>
         void SubmitSampleData(Byte[] data);
 
         /// <summary>Command to start rendering audio</summary>
-        /// <param name="behavior">Behavior with which to render audio</param>
-        void StartRendering(AudioRenderStyle behavior);
+        void StartRendering();
 
         /// <summary>Sets details for the rendering context (such as 3D coordinates and so on)</summary>
         /// <param name="detail">Rendering context details to set</param>
