@@ -17,5 +17,8 @@ namespace Bardez.Projects.Multimedia.MediaBase.Render.Audio
 
         /// <summary>Not sure that this is needed</summary>
         public Boolean MuffleSound { get; set; }
+
+        //TODO: Support 3D effects (reverberation)
+        //  I need a reverb setting at the least. Not sure how things will go from there with additional programmed filters/effects
     }
 }
