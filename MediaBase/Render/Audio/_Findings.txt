@@ -1,0 +1,9 @@
+﻿It appears that I3DL2 is the common denomenator between OpenAL and XAudio2.
+
+The EAX reverb has a LOT more potential than either I3DL2 or XAudio2.
+
+What I3DL2 and XAudio2 call "room filter" is what OpenAL / EAX call "gain"
+	Ergo, the Room and RoomHF properties in I3DL2 and XAudio2 are really the Gain and GainHF properties in OpenAL/EAX
+
+The OpenAL AL_EFFECT_REVERB maps almost perfectly to the I3DL2 propertes, and I3DL2 maps into XAudio2 via common methods.
+	Ergo, just use the I3DL2 as the least common denominator

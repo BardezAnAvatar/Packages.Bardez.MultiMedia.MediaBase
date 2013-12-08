@@ -12,10 +12,14 @@
     <AssemblyName>Media Base</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -80,6 +84,7 @@
     <Compile Include="Management\Basic Multimedia Controller.cs" />
     <Compile Include="Management\IMultimediaController.cs" />
     <Compile Include="Render\Audio\Audio Cone.cs" />
+    <Compile Include="Render\Audio\Audio Detail Parameters.cs" />
     <Compile Include="Render\Audio\Audio Source Params.cs" />
     <Compile Include="Render\Audio\Distance Curve Point.cs" />
     <Compile Include="Render\Audio\Emitter.cs" />
@@ -87,6 +92,7 @@
     <Compile Include="Render\Audio\IAudioRenderManager.cs" />
     <Compile Include="Render\Audio\Listener.cs" />
     <Compile Include="Render\Audio\Perspective.cs" />
+    <Compile Include="Render\Audio\Reverb Settings.cs" />
     <Compile Include="Render\IAVStreamRenderManager.cs" />
     <Compile Include="Frame\Video\IMovie.cs" />
     <Compile Include="Data\Pixels\Enums\Scan Line Order.cs" />
@@ -112,6 +118,7 @@
     <Compile Include="Data\Resize\Delegates.cs" />
     <Compile Include="Data\Resize\Nearest Neighbor Integer Space.cs" />
     <Compile Include="Render\Image\IRendererImage.cs" />
+    <Compile Include="Render\Image\Line Style.cs" />
     <Compile Include="Render\Subtitle\ISubtitleRenderManager.cs" />
     <Compile Include="Render\Video\IVideoRenderManager.cs" />
   </ItemGroup>
@@ -131,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="media base design.txt" />
+    <Content Include="Render\Audio\_Findings.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Frame\Subtitle\" />
