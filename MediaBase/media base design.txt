@@ -23,13 +23,12 @@ Design Model:
 	Container will decode/return Frames to pass on to RenderManagement via IMultimediaFrameBuffer
 
 	Frame will encompass a single set of data samples for rendering, returned from container into RenderManager into Renderers
-	
+
 	RenderManagers will expose an AttemptRender and a Render event.
 	AttemptRender will be for Manager to pass in a timecode, at which point the render manager decides
 		whether or not to render, when it pulls a frame from the StreamingFrameBuffer and raises the render
 		event.
 	Render event will connect to an actual renderer
-	
+
 	Renderer will attach to a render event. This will then react to the data submitted in the frame
 		and render out to associated control, resource, etc.
-	
