@@ -1,7 +1,5 @@
 ﻿using System;
 
-using Bardez.Projects.Multimedia.MediaBase.Video;
-
 namespace Bardez.Projects.Multimedia.MediaBase.Frame.Image
 {
     /// <summary>Interface to getting a specific image from a format that logically stores multiple frames</summary>

@@ -9,16 +9,15 @@ namespace Bardez.Projects.Multimedia.MediaBase.Render.Audio
     /// <remarks>This is an attempt to merge XAudio2 and OpenAL 3D effects</remarks>
     public class AudioSourceParams
     {
+        #region Fields
         /// <summary>Audio emission source</summary>
         public Emitter Emitter { get; set; }
 
         /// <summary>Audio listening receptor</summary>
         public Listener Listener { get; set; }
 
-        /// <summary>Not sure that this is needed</summary>
-        public Boolean MuffleSound { get; set; }
-
-        //TODO: Support 3D effects (reverberation)
-        //  I need a reverb setting at the least. Not sure how things will go from there with additional programmed filters/effects
+        /// <summary>Audio properties for reverberation. If null, no reverb will be used.</summary>
+        public ReverbSettings Reverberation { get; set; }
+        #endregion
     }
 }

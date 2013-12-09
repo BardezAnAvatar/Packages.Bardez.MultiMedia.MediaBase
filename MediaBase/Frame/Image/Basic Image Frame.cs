@@ -3,8 +3,6 @@ using System.IO;
 
 using Bardez.Projects.Multimedia.MediaBase.Data.Pixels;
 using Bardez.Projects.Multimedia.MediaBase.Data.Pixels.Enums;
-using Bardez.Projects.Multimedia.MediaBase.Video;
-using Bardez.Projects.Multimedia.MediaBase.Video.Pixels;
 
 namespace Bardez.Projects.Multimedia.MediaBase.Frame.Image
 {

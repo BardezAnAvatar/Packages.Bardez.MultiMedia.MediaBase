@@ -1,6 +1,4 @@
-﻿using Bardez.Projects.Multimedia.MediaBase.Video;
-
-namespace Bardez.Projects.Multimedia.MediaBase.Frame.Image
+﻿namespace Bardez.Projects.Multimedia.MediaBase.Frame.Image
 {
     /// <summary>Interface for images that can return a frame for processing</summary>
     public interface IImage

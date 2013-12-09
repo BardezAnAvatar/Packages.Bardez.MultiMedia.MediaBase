@@ -44,8 +44,9 @@ namespace Bardez.Projects.Multimedia.MediaBase.Render.Audio
         /// <param name="audioInfo">Collection of data that indicates what the format of the source audio is</param>
         /// <param name="destinationConfiguration">Configuration of audio channels for rendering output</param>
         /// <param name="behavior">Behavior with which to render audio</param>
+        /// <param name="reverb">Settings for the reverberation effect, if any</param>
         /// <param name="targetDeviceName">Name of the target device to be rendered to. If null or not found, system will use the system default device, if appropriate</param>
-        void Initialize(WaveFormatEx audioInfo, SpeakerConfiguration destinationConfiguration, AudioRenderStyle behavior, String targetDeviceName);
+        void Initialize(WaveFormatEx audioInfo, SpeakerConfiguration destinationConfiguration, AudioRenderStyle behavior, ReverbSettings reverb, String targetDeviceName);
 
         /// <summary>Submits data for rendering</summary>
         /// <param name="data">Audio samples to render</param>

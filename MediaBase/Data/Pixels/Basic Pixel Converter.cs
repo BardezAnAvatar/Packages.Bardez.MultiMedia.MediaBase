@@ -6,7 +6,7 @@ using Bardez.Projects.Multimedia.MediaBase.Data.Pixels.Enums;
 using Bardez.Projects.Multimedia.MediaBase.Frame.Image;
 using Bardez.Projects.ReusableCode;
 
-namespace Bardez.Projects.Multimedia.MediaBase.Video.Pixels
+namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels
 {
     /// <summary>Basic pixel dat converter, not especially efficient. No external dependencies.</summary>
     public class BasicPixelConverter : IPixelConverter
