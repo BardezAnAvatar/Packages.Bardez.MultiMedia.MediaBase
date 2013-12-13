@@ -123,11 +123,11 @@
       <Project>{257201A0-0B65-4EA0-AC04-0B8005AECC37}</Project>
       <Name>Basic Structures</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ReusableCode\ReusableCode.csproj">
+    <ProjectReference Include="..\..\Utility Projects\ReusableCode\ReusableCode.csproj">
       <Project>{72729DA3-9933-4C3D-91C6-2CF0336D6493}</Project>
       <Name>ReusableCode</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Utility\Utility.csproj">
+    <ProjectReference Include="..\..\Utility Projects\Utility\Utility.csproj">
       <Project>{F59DB5BA-CD9F-45D1-B879-4A7661A3FB0A}</Project>
       <Name>Utility</Name>
     </ProjectReference>
