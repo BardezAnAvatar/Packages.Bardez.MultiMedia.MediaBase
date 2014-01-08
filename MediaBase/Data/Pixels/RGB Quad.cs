@@ -33,6 +33,13 @@ namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels
         {
             this.Alpha = alpha;
         }
+
+        /// <summary>Definition constructor</summary>
+        /// <param name="red">The red component value</param>
+        /// <param name="green">The green component value</param>
+        /// <param name="blue">The blue component value</param>
+        /// <param name="alpha">The alpha transparency component value</param>
+        public RgbQuad(Int32 red, Int32 green, Int32 blue, Int32 alpha) : this((Byte)red, (Byte)green, (Byte)blue, (Byte)alpha) { }
         #endregion
 
 
