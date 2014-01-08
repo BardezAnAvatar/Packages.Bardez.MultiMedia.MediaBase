@@ -26,6 +26,9 @@ namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels.Enums
         /// <summary>16-bit RGB with no alpha channel. Represented in R, G, B order, discarding the 16th bit.</summary>
         RGB_R5G5B5X1,
 
+        /// <summary>16-bit RGB with no alpha channel. Represented in R, G, B order, giving the extra bit to green.</summary>
+        RGB_R5G6B5,
+
         /// <summary>Represents the YCbCr colorspace pixel format used by JFIF (it specifies slightly different color conversions than other sources). Represented in Y, Cb, Cr order.</summary>
         YCbCrJpeg,
 
