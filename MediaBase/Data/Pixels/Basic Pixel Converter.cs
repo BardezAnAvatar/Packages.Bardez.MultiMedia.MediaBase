@@ -33,6 +33,8 @@ namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels
                 converted = this.ConvertJfifYCbCrToRgba(data, horizontalPacking, verticalPacking, sourceWidth, sourceHeight, decodedBitDepth);
             else if (sourceFormat == PixelFormat.RGB_B5G5R5X1 && destinationFormat == PixelFormat.RGBA_B8G8R8A8)    //RGB BGR 16 -> RGBA BGRA 32
                 converted = this.ConvertRgb16_555_ToRgba(data, horizontalPacking, verticalPacking, sourceWidth, sourceHeight, decodedBitDepth);
+            else if (sourceFormat == PixelFormat.RGB_R5G6B5 && destinationFormat == PixelFormat.RGBA_B8G8R8A8)      //RGB BGR 16 -> RGBA BGRA 32
+                converted = this.ConvertRgb16_565_ToRgba(data, horizontalPacking, verticalPacking, sourceWidth, sourceHeight, decodedBitDepth);
             else
                 throw new NotSupportedException("Other conversions not supported at this time.");
 
@@ -171,7 +173,7 @@ namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels
             return new MemoryStream(rgba);
         }
 
-        /// <summary>Converts RGB16 (red5, blue5, green5) data to RGB32 data</summary>
+        /// <summary>Converts RGB16 (red5, green5, blue5) data to RGB32 data</summary>
         /// <param name="data">Decompressed data to convert</param>
         /// <param name="horizontalPacking">Row packing</param>
         /// <param name="verticalPacking">Row count to align to</param>
@@ -207,7 +209,7 @@ namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels
 
                     /* 
                      * expecting Xrrrrrgggggbbbbb; the typical approach, I'm told, is to take
-                     * the 3 most significant and use them for the missing least significant
+                     * the 3 most significant and use them for the missing least significant to make a full 8-bit value
                     */
                     Byte first = (Byte)(pixel & 0x001F);
                     Byte second = (Byte)((pixel & 0x03E0) >> 5);
@@ -217,10 +219,10 @@ namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels
                     second = (Byte)((second << 3) | ((second & mask) >> 2));
                     third = (Byte)((third << 3) | ((third & mask) >> 2));
 
-                    rgba[destOffset] = first;            //blue
-                    rgba[destOffset + 1] = second;        //green
-                    rgba[destOffset + 2] = third;      //red
-                    rgba[destOffset + 3] = 255;                         //alpha
+                    rgba[destOffset] = first;           //blue
+                    rgba[destOffset + 1] = second;      //green
+                    rgba[destOffset + 2] = third;       //red
+                    rgba[destOffset + 3] = 255;         //alpha
 
                     //increment
                     srcPixelX += 2;
@@ -230,6 +232,69 @@ namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels
 
             return new MemoryStream(rgba);
         }
+
+        /// <summary>Converts RGB16 (red5, green6, blue5) data to RGB32 data</summary>
+        /// <param name="data">Decompressed data to convert</param>
+        /// <param name="horizontalPacking">Row packing</param>
+        /// <param name="verticalPacking">Row count to align to</param>
+        /// <param name="sourceWidth">Indicates the source width of the image data</param>
+        /// <param name="sourceHeight">Indicates the source height of the image data</param>
+        /// <returns>The converted data</returns>
+        protected MemoryStream ConvertRgb16_565_ToRgba(MemoryStream data, Int32 horizontalPacking, Int32 verticalPacking, Int32 sourceWidth, Int32 sourceHeight, Int32 decodedBitDepth)
+        {
+            Int32 dataRowWidth = PixelCalculations.PackedRowByteWidth(decodedBitDepth, horizontalPacking, sourceWidth);
+            Int32 dataRowCount = PixelCalculations.PackedRowCount(verticalPacking, sourceHeight);
+            Int32 newRowWidth = PixelCalculations.PackedRowByteWidth(RgbQuad.BitsPerPixel, horizontalPacking, sourceWidth);
+
+            Byte[] rgba = new Byte[newRowWidth * dataRowCount];
+
+            //constant speedup
+            Int32 srcWidth = (sourceWidth * 2);
+
+            //loop rows
+            for (Int32 row = 0; row < dataRowCount; ++row)
+            {
+                Int32 srcDataOffset = (row * dataRowWidth);
+                Int32 destDataOffset = (row * newRowWidth);
+                Int32 srcPixelX = 0, destPixelX = 0;
+
+                while (srcPixelX < srcWidth)
+                {
+                    //save a bit of time on additions?
+                    Int32 destOffset = destDataOffset + destPixelX;
+                    Int32 srcOffset = srcDataOffset + srcPixelX;
+
+                    ReusableIO.SeekIfAble(data, srcOffset);
+                    UInt16 pixel = ReusableIO.ReadUInt16FromStream(data);
+
+                    /* 
+                     * expecting rrrrrggggggbbbbb; the typical approach for R5G5B5, I'm told, is to take
+                     * the 3 most significant and use them for the missing least significant to make a full 8-bit value;
+                     * do the same with R5 and B5, and adjust for G6
+                    */
+                    Byte first = (Byte)(pixel & 0x001F);
+                    Byte second = (Byte)((pixel & 0x07E0) >> 5);
+                    Byte third = (Byte)((pixel & 0xF800) >> 11);
+                    Byte mask5 = 0x1C;   //top three bits of 5 bit nibble
+                    Byte mask6 = 0x30;   //top two bits of 6 bit nibble
+                    first = (Byte)((first << 3) | ((first & mask5) >> 2));
+                    second = (Byte)((second << 2) | ((second & mask6) >> 4));
+                    third = (Byte)((third << 3) | ((third & mask5) >> 2));
+
+                    rgba[destOffset] = first;           //blue
+                    rgba[destOffset + 1] = second;      //green
+                    rgba[destOffset + 2] = third;       //red
+                    rgba[destOffset + 3] = 255;         //alpha
+
+                    //increment
+                    srcPixelX += 2;
+                    destPixelX += RgbQuad.BytesPerPixel;
+                }
+            }
+
+            return new MemoryStream(rgba);
+        }
+
 
         /// <summary>Converts JFIF YCbCr data to RGB32 data</summary>
         /// <param name="data">Decompressed data to convert</param>
