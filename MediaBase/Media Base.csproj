@@ -72,6 +72,8 @@
     <Compile Include="Container\Stream Type.cs" />
     <Compile Include="Frame\Audio\IMultimediaAudioFrame.cs" />
     <Compile Include="Frame\Buffers\IMultimediaFrameStreamBuffers.cs" />
+    <Compile Include="Frame\Image\Basic Image.cs" />
+    <Compile Include="Frame\Image\Image Manipulation.cs" />
     <Compile Include="Frame\Image\Image Metadata.cs" />
     <Compile Include="Frame\IMultimediaFrame.cs" />
     <Compile Include="Frame\Buffers\IMultimediaFrameBuffer.cs" />
