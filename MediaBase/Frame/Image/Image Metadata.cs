@@ -48,7 +48,7 @@ namespace Bardez.Projects.Multimedia.MediaBase.Frame.Image
 
 
         #region Properties
-        /// <summary>Accesses the decompressed/raw output Bits per pixel</summary>
+        /// <summary>Accesses the decompressed/raw output Bits per pixel, either the pallet's bpp or the data's bpp if no palette</summary>
         public Int32 ExpandedBitsPerPixel
         {
             get { return this.DataPalette == null ? this.BitsPerDataPixel : this.DataPalette.BitsPerPixel; }
