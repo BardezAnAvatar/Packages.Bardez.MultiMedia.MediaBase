@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media Base", "MediaBase\Media Base.csproj", "{31CA90A7-1628-493B-A99B-8B9F6899158F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{31CA90A7-1628-493B-A99B-8B9F6899158F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31CA90A7-1628-493B-A99B-8B9F6899158F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31CA90A7-1628-493B-A99B-8B9F6899158F}.Debug|x64.ActiveCfg = Debug|x64
+		{31CA90A7-1628-493B-A99B-8B9F6899158F}.Debug|x64.Build.0 = Debug|x64
+		{31CA90A7-1628-493B-A99B-8B9F6899158F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31CA90A7-1628-493B-A99B-8B9F6899158F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31CA90A7-1628-493B-A99B-8B9F6899158F}.Release|x64.ActiveCfg = Release|x64
+		{31CA90A7-1628-493B-A99B-8B9F6899158F}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB18A292-926B-4F77-BDEB-0592F7B936BC}
+	EndGlobalSection
+EndGlobal
