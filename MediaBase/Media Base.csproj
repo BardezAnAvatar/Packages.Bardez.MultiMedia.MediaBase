@@ -138,6 +138,7 @@
     <Folder Include="Frame\Subtitle\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Bardez.MultiMedia.MediaBase.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
