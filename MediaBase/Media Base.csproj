@@ -67,6 +67,9 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ReusableCode, Version=1.0.7150.39734, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bardez.ReusableCode.1.0.0\lib\net40\ReusableCode.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
   </ItemGroup>
@@ -129,10 +132,6 @@
       <Project>{257201A0-0B65-4EA0-AC04-0B8005AECC37}</Project>
       <Name>Basic Structures</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Utility Projects\ReusableCode\ReusableCode.csproj">
-      <Project>{72729DA3-9933-4C3D-91C6-2CF0336D6493}</Project>
-      <Name>ReusableCode</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Utility Projects\Utility\Utility.csproj">
       <Project>{F59DB5BA-CD9F-45D1-B879-4A7661A3FB0A}</Project>
       <Name>Utility</Name>
@@ -144,6 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Frame\Subtitle\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
