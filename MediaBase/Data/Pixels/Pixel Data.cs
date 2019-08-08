@@ -6,7 +6,6 @@ using Bardez.Projects.BasicStructures.Math;
 using Bardez.Projects.Multimedia.MediaBase.Data.Pixels.Enums;
 using Bardez.Projects.Multimedia.MediaBase.Frame.Image;
 using Bardez.Projects.ReusableCode;
-using Bardez.Projects.Utility;
 
 namespace Bardez.Projects.Multimedia.MediaBase.Data.Pixels
 {
