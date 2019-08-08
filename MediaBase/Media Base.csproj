@@ -67,8 +67,11 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Basic Structures, Version=0.1.7159.2728, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bardez.BasicStructures.1.0.0\lib\net40\Basic Structures.dll</HintPath>
+    </Reference>
     <Reference Include="ReusableCode, Version=1.0.7150.39734, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bardez.ReusableCode.1.0.0\lib\net40\ReusableCode.dll</HintPath>
+      <HintPath>..\packages\Bardez.BasicStructures.1.0.0\lib\net40\ReusableCode.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -128,10 +131,6 @@
     <Compile Include="Render\Video\IVideoRenderManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Basic Structures\Basic Structures.csproj">
-      <Project>{257201A0-0B65-4EA0-AC04-0B8005AECC37}</Project>
-      <Name>Basic Structures</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Utility Projects\Utility\Utility.csproj">
       <Project>{F59DB5BA-CD9F-45D1-B879-4A7661A3FB0A}</Project>
       <Name>Utility</Name>
